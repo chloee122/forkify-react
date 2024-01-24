@@ -11,4 +11,12 @@ const searchRecipes = async (term) => {
   return response.data.data;
 };
 
-export default searchRecipes;
+const getRecipe = async (id) => {
+  const response = await axios.get(
+    `https://forkify-api.herokuapp.com/api/v2/recipes/${id}`
+  );
+
+  return response.data.data.recipe;
+};
+
+export { searchRecipes, getRecipe };

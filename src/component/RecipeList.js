@@ -2,7 +2,7 @@ import { useState } from "react";
 import RecipeListItem from "./RecipeListItem";
 import Pagination from "./Pagination";
 
-function RecipeList({ recipes }) {
+function RecipeList({ recipes, handleChooseRecipe }) {
   const [currentPage, setCurrentPage] = useState(1);
   //   const [recipeList, setRecipeList] = useState([
   //     ...recipes.slice(startIndex, endIndex),
@@ -15,7 +15,11 @@ function RecipeList({ recipes }) {
   const recipeList = recipes.slice(startIndex, endIndex);
 
   const renderedRecipes = recipeList.map((recipe) => (
-    <RecipeListItem key={recipe.id} recipe={recipe} />
+    <RecipeListItem
+      key={recipe.id}
+      recipe={recipe}
+      handleChooseRecipe={handleChooseRecipe}
+    />
   ));
 
   return (

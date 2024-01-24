@@ -1,7 +1,8 @@
 import { useState } from "react";
-import searchRecipes from "./api";
+import { searchRecipes, getRecipe } from "./api";
 import RecipeSearch from "./component/RecipeSearch";
 import RecipeList from "./component/RecipeList";
+import DisplayRecipe from "./component/DisplayRecipe";
 
 function App() {
   const [recipes, setRecipes] = useState([]);
@@ -10,10 +11,21 @@ function App() {
     setRecipes(results.recipes);
   };
 
+  const [recipe, setRecipe] = useState([]);
+  const handleChooseRecipe = async (id) => {
+    const result = await getRecipe(id);
+    setRecipe(result);
+  };
+
   return (
     <div>
-      <RecipeSearch onSubmit={handleSubmit} />
-      <RecipeList recipes={recipes} />
+      <div>
+        <RecipeSearch handleSearch={handleSubmit} />
+      </div>
+      <div className="flex">
+        <RecipeList recipes={recipes} handleChooseRecipe={handleChooseRecipe} />
+        {recipe && <DisplayRecipe recipe={recipe} />}
+      </div>
     </div>
   );
 }
