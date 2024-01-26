@@ -2,11 +2,17 @@ import { useState } from "react";
 import RecipeListItem from "./RecipeListItem";
 import Pagination from "./Pagination";
 
-function RecipeList({ recipes, handleChooseRecipe }) {
-  const [currentPage, setCurrentPage] = useState(1);
+function RecipeList({
+  recipes,
+  handleChooseRecipe,
+  currentPage,
+  setCurrentPage,
+}) {
+  // const [currentPage, setCurrentPage] = useState(1);
   //   const [recipeList, setRecipeList] = useState([
   //     ...recipes.slice(startIndex, endIndex),
   //   ]);
+
   const [recordsPerPage] = useState(10);
 
   const endIndex = currentPage * recordsPerPage;

@@ -2,6 +2,7 @@ import { useState } from "react";
 
 function RecipeSearch({ handleSearch, handleChooseRecipe }) {
   const [term, setTerm] = useState("");
+
   const handleChange = (event) => {
     setTerm(event.target.value);
   };
