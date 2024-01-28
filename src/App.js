@@ -11,7 +11,7 @@ function App() {
     setRecipes(results.recipes);
   };
 
-  const [recipe, setRecipe] = useState();
+  const [recipe, setRecipe] = useState(null);
   const handleChooseRecipe = async (id) => {
     const result = await getRecipe(id);
     setRecipe(result);

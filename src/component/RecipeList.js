@@ -2,21 +2,21 @@ import { useState, useEffect, useCallback } from "react";
 import RecipeListItem from "./RecipeListItem";
 import Pagination from "./Pagination";
 
+const RECORDS_PER_PAGE = 10;
 function RecipeList({ recipes, handleChooseRecipe }) {
-  const [currentPage, setCurrentPage] = useState();
-  const [recordsPerPage] = useState(10);
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     setCurrentPage(1);
   }, [recipes]);
 
-  const totalPages = Math.ceil(recipes.length / recordsPerPage);
+  const totalPages = Math.ceil(recipes.length / RECORDS_PER_PAGE);
 
   const getRecipeListByCurrentPageNumber = useCallback(() => {
-    const endIndex = currentPage * recordsPerPage;
-    const startIndex = endIndex - recordsPerPage;
+    const endIndex = currentPage * RECORDS_PER_PAGE;
+    const startIndex = endIndex - RECORDS_PER_PAGE;
     return recipes.slice(startIndex, endIndex);
-  }, [currentPage, recordsPerPage, recipes]);
+  }, [currentPage, recipes]);
 
   const renderedRecipes = getRecipeListByCurrentPageNumber().map((recipe) => (
     <RecipeListItem
@@ -29,7 +29,7 @@ function RecipeList({ recipes, handleChooseRecipe }) {
   return (
     <div>
       <div>{renderedRecipes}</div>
-      {renderedRecipes.length !== 0 && (
+      {getRecipeListByCurrentPageNumber().length !== 0 && (
         <Pagination
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
