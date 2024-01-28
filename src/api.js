@@ -7,7 +7,7 @@ const searchRecipes = async (term) => {
       params: { search: term },
     }
   );
-  console.log(response);
+
   return response.data.data;
 };
 

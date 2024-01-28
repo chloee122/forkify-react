@@ -1,20 +1,24 @@
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import RecipeListItem from "./RecipeListItem";
 import Pagination from "./Pagination";
 
 function RecipeList({ recipes, handleChooseRecipe }) {
-  const [currentPage, setCurrentPage] = useState(1);
-  //   const [recipeList, setRecipeList] = useState([
-  //     ...recipes.slice(startIndex, endIndex),
-  //   ]);
+  const [currentPage, setCurrentPage] = useState();
   const [recordsPerPage] = useState(10);
 
-  const endIndex = currentPage * recordsPerPage;
-  const startIndex = endIndex - recordsPerPage;
-  const nPages = Math.ceil(recipes.length / recordsPerPage);
-  const recipeList = recipes.slice(startIndex, endIndex);
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [recipes]);
 
-  const renderedRecipes = recipeList.map((recipe) => (
+  const totalPages = Math.ceil(recipes.length / recordsPerPage);
+
+  const getRecipeListByCurrentPageNumber = useCallback(() => {
+    const endIndex = currentPage * recordsPerPage;
+    const startIndex = endIndex - recordsPerPage;
+    return recipes.slice(startIndex, endIndex);
+  }, [currentPage, recordsPerPage, recipes]);
+
+  const renderedRecipes = getRecipeListByCurrentPageNumber().map((recipe) => (
     <RecipeListItem
       key={recipe.id}
       recipe={recipe}
@@ -29,7 +33,7 @@ function RecipeList({ recipes, handleChooseRecipe }) {
         <Pagination
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
-          nPages={nPages}
+          totalPages={totalPages}
         />
       )}
     </div>

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function RecipeSearch({ handleSearch, handleChooseRecipe }) {
+function RecipeSearchForm({ handleSearch }) {
   const [term, setTerm] = useState("");
   const handleChange = (event) => {
     setTerm(event.target.value);
@@ -21,4 +21,4 @@ function RecipeSearch({ handleSearch, handleChooseRecipe }) {
   );
 }
 
-export default RecipeSearch;
+export default RecipeSearchForm;

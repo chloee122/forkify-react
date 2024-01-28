@@ -1,4 +1,4 @@
-function ShowRecipe({ recipe }) {
+function Recipe({ recipe }) {
   const content = (
     <div>
       <div>
@@ -9,4 +9,4 @@ function ShowRecipe({ recipe }) {
   );
   return <div>{content}</div>;
 }
-export default ShowRecipe;
+export default Recipe;
