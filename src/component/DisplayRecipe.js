@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import RecipeDetails from "./RecipeDetails";
 import RecipeIngredients from "./RecipeIngredients";
+import RecipeDirection from "./RecipeDirection";
 
-function DisplayRecipe({ recipe }) {
-  const {
+function DisplayRecipe({
+  recipe: {
     id,
     cooking_time,
     image_url,
@@ -12,12 +13,13 @@ function DisplayRecipe({ recipe }) {
     servings: defaultServing,
     source_url,
     title,
-  } = recipe;
+  },
+}) {
   const [servings, setServings] = useState(defaultServing);
 
   useEffect(() => {
     setServings(defaultServing);
-  }, [defaultServing, recipe]);
+  }, [defaultServing]);
 
   const content = (
     <div>
@@ -29,7 +31,7 @@ function DisplayRecipe({ recipe }) {
         />
         <h1 className="absolute bottom-0 left-1/2  -translate-x-2/4 translate-y-1/4 -skew-y-6 text-white text-5xl w-1/2 uppercase leading-loose text-center">
           <span className="py-5 px-8 bg-gradient-to-br from-yellow-100 to-orange-500">
-            {recipe.title}
+            {title}
           </span>
         </h1>
       </figure>
@@ -43,6 +45,7 @@ function DisplayRecipe({ recipe }) {
         defaultServing={defaultServing}
         servings={servings}
       />
+      <RecipeDirection url={source_url} publisher={publisher} />
     </div>
   );
   return <div>{content}</div>;
