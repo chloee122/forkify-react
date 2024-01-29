@@ -1,23 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import { searchRecipes, getRecipe } from "./api";
+import RecipeSearchForm from "./component/RecipeSearchForm";
+import RecipeList from "./component/RecipeList";
+import Recipe from "./component/Recipe";
 
 function App() {
+  const [recipes, setRecipes] = useState([]);
+  const handleSubmit = async (term) => {
+    const results = await searchRecipes(term);
+    setRecipes(results.recipes);
+  };
+
+  const [recipe, setRecipe] = useState(null);
+  const handleChooseRecipe = async (id) => {
+    const result = await getRecipe(id);
+    setRecipe(result);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <div>
+        <RecipeSearchForm handleSearch={handleSubmit} />
+      </div>
+      <div className="flex">
+        <RecipeList recipes={recipes} handleChooseRecipe={handleChooseRecipe} />
+        {recipe && <Recipe recipe={recipe} />}
+      </div>
     </div>
   );
 }
