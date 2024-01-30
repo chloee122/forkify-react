@@ -14,6 +14,7 @@ function DisplayRecipe({
     source_url,
     title,
   },
+  onBookmark,
 }) {
   const [servings, setServings] = useState(defaultServing);
 
@@ -36,9 +37,11 @@ function DisplayRecipe({
         </h1>
       </figure>
       <RecipeDetails
+        id={id}
         cookingTime={cooking_time}
         servings={servings}
         setServings={setServings}
+        onBookmark={onBookmark}
       />
       <RecipeIngredients
         ingredients={ingredients}
