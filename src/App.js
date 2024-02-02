@@ -1,14 +1,14 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import { searchRecipes, getRecipe } from "./api";
 import RecipeSearchForm from "./component/RecipeSearchForm";
 import RecipeList from "./component/RecipeList";
 import DisplayRecipe from "./component/DisplayRecipe";
-import BookmarkList from "./component/BookmarkList";
+import Bookmark from "./component/Bookmark";
 
 function App() {
   const [recipes, setRecipes] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
-  const [showBookmarks, setShowBookmarks] = useState(false);
   const [bookmarks, setBookmarks] = useState([]);
 
   const handleSubmit = async (term) => {
@@ -16,8 +16,39 @@ function App() {
     setRecipes(results.recipes);
   };
 
-  const handleBookmark = (id) => {
-    setBookmarks([...bookmarks, id]);
+  const fetchBookmark = async () => {
+    const response = await axios.get("http://localhost:3001/bookmarks");
+    console.log("render");
+    setBookmarks(response.data);
+  };
+
+  useEffect(() => {
+    fetchBookmark();
+  }, []);
+
+  const createBookmark = async (recipe) => {
+    const response = await axios.post("http://localhost:3001/bookmarks", {
+      id: recipe.id,
+      title: recipe.title,
+      imageUrl: recipe.image_url,
+      publisher: recipe.publisher,
+    });
+
+    setBookmarks([...bookmarks, response.data]);
+  };
+
+  const deleteBookmark = async (id) => {
+    await axios.delete(`http://localhost:3001/bookmarks/${id}`);
+
+    setBookmarks(bookmarks.filter((bookmark) => bookmark.id !== id));
+  };
+
+  const handleBookmark = () => {
+    if (bookmarks.some((bookmark) => bookmark.id === recipe.id)) {
+      deleteBookmark(recipe.id);
+    } else {
+      createBookmark(recipe);
+    }
   };
 
   const [recipe, setRecipe] = useState([]);
@@ -26,22 +57,14 @@ function App() {
     setRecipe(result);
   };
 
-  const handleHover = () => {
-    setShowBookmarks(true);
-  };
-
-  const handleLeave = () => {
-    setShowBookmarks(false);
-  };
-
   return (
     <div>
       <div className="flex">
         <RecipeSearchForm handleSearch={handleSubmit} />
-        <button onMouseEnter={handleHover} onMouseLeave={handleLeave}>
-          BOOKMARKS
-        </button>
-        {showBookmarks && <BookmarkList bookmarks={bookmarks} />}
+        <Bookmark
+          bookmarks={bookmarks}
+          handleChooseRecipe={handleChooseRecipe}
+        />
       </div>
       <div className="flex">
         <RecipeList
@@ -51,7 +74,11 @@ function App() {
           setCurrentPage={setCurrentPage}
         />
         {recipe.length !== 0 && (
-          <DisplayRecipe recipe={recipe} onBookmark={handleBookmark} />
+          <DisplayRecipe
+            recipe={recipe}
+            onBookmark={handleBookmark}
+            bookmarks={bookmarks}
+          />
         )}
       </div>
     </div>
