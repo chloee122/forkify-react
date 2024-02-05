@@ -1,12 +1,16 @@
-function BookmarkList({ bookmarks, setShowBookmarks, handleChooseRecipe }) {
+import { useContext } from "react";
+import SelectedRecipeContext from "../context/SelectedRecipeContext";
+import BookmarksContext from "../context/BookmarksContext";
+
+function BookmarkList() {
+  const { bookmarks } = useContext(BookmarksContext);
+  const { handleSelectRecipe } = useContext(SelectedRecipeContext);
   const renderedBookmarks = bookmarks.map((bookmark) => {
     return (
       <div
         key={bookmark.id}
-        onMouseEnter={() => setShowBookmarks(true)}
-        onMouseLeave={() => setShowBookmarks(false)}
         className="group/item hover:bg-slate-100 flex"
-        onClick={() => handleChooseRecipe(bookmark.id)}
+        onClick={() => handleSelectRecipe(bookmark.id)}
       >
         <img
           src={bookmark.imageUrl}

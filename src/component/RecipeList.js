@@ -3,7 +3,7 @@ import RecipeListItem from "./RecipeListItem";
 import Pagination from "./Pagination";
 
 const RECORDS_PER_PAGE = 10;
-function RecipeList({ recipes, handleChooseRecipe }) {
+function RecipeList({ recipes }) {
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
@@ -19,11 +19,7 @@ function RecipeList({ recipes, handleChooseRecipe }) {
   }, [currentPage, recipes]);
 
   const renderedRecipes = getRecipeListByCurrentPageNumber().map((recipe) => (
-    <RecipeListItem
-      key={recipe.id}
-      recipe={recipe}
-      handleChooseRecipe={handleChooseRecipe}
-    />
+    <RecipeListItem key={recipe.id} recipe={recipe} />
   ));
 
   return (
