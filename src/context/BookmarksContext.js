@@ -5,8 +5,8 @@ const BookmarksContext = createContext();
 function BookmarksProvider({ children }) {
   const [bookmarks, setBookmarks] = useState([]);
 
-  const fetchBookmarks = async () => {
-    const data = await api.fetchBookmarks();
+  const getBookmarks = async () => {
+    const data = await api.getBookmarks();
     setBookmarks(data);
   };
 
@@ -25,7 +25,7 @@ function BookmarksProvider({ children }) {
       value={{
         bookmarks,
         setBookmarks,
-        fetchBookmarks,
+        getBookmarks,
         createBookmark,
         deleteBookmark,
       }}

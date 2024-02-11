@@ -7,7 +7,7 @@ import SelectedRecipeContext from "../context/SelectedRecipeContext";
 function DisplayRecipe() {
   const { selectedRecipe } = useContext(SelectedRecipeContext);
   const [selectedServings, setSelectedServings] = useState(
-    selectedRecipe?.servings || null
+    selectedRecipe?.servings || 0
   );
 
   useEffect(() => {

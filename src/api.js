@@ -17,7 +17,7 @@ const selectRecipe = async (id) => {
   return response.data.data.recipe;
 };
 
-const fetchBookmarks = async () => {
+const getBookmarks = async () => {
   const response = await axios.get("http://localhost:3001/bookmarks");
   return response.data;
 };
@@ -39,7 +39,7 @@ const deleteBookmark = async (id) => {
 export {
   searchRecipes,
   selectRecipe,
-  fetchBookmarks,
+  getBookmarks,
   createBookmark,
   deleteBookmark,
 };

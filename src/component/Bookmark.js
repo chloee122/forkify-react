@@ -4,10 +4,10 @@ import BookmarksContext from "../context/BookmarksContext";
 
 function Bookmark() {
   const [showBookmarks, setShowBookmarks] = useState(false);
-  const { fetchBookmarks } = useContext(BookmarksContext);
+  const { getBookmarks } = useContext(BookmarksContext);
 
   useEffect(() => {
-    fetchBookmarks();
+    getBookmarks();
   }, []);
 
   return (
