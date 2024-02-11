@@ -1,7 +1,11 @@
-function RecipeListItem({ recipe, handleChooseRecipe }) {
+import { useContext } from "react";
+import SelectedRecipeContext from "../context/SelectedRecipeContext";
+
+function RecipeListItem({ recipe }) {
+  const { selectRecipe } = useContext(SelectedRecipeContext);
   return (
     <div
-      onClick={() => handleChooseRecipe(recipe.id)}
+      onClick={() => selectRecipe(recipe.id)}
       className="group/item hover:bg-slate-100 flex"
     >
       <img

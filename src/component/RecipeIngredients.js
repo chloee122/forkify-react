@@ -1,10 +1,13 @@
 import { Fraction } from "fractional";
 
-function RecipeIngredients({ ingredients, defaultServing, servings }) {
+function RecipeIngredients({
+  selectedRecipe: { ingredients, servings: defaultServing },
+  selectedServings,
+}) {
   const renderedIngredients = ingredients.map((ingredient, index) => {
     const quantity = ingredient.quantity
       ? new Fraction(
-          (ingredient.quantity * servings) / defaultServing
+          (ingredient.quantity * selectedServings) / defaultServing
         ).toString()
       : "";
     return (

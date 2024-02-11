@@ -1,28 +1,46 @@
-import { GoClock, GoPerson, GoBookmark, GobookmarkFill } from "react-icons/go";
+import { GoClock, GoPerson, GoBookmark, GoBookmarkFill } from "react-icons/go";
 import { CiCirclePlus, CiCircleMinus } from "react-icons/ci";
+import { useContext, useMemo } from "react";
+import BookmarksContext from "../context/BookmarksContext";
 
-function RecipeDetails({ cookingTime, servings, setServings, id, onBookmark }) {
+function RecipeDetails({
+  selectedRecipe,
+  selectedServings,
+  setSelectedServings,
+}) {
   const handleIncreaseServings = () => {
-    setServings(servings + 1);
+    setSelectedServings(selectedServings + 1);
   };
   const handleDecreaseServings = () => {
-    if (servings === 1) return;
-    setServings(servings - 1);
+    if (selectedServings === 1) return;
+    setSelectedServings(selectedServings - 1);
   };
 
+  const { bookmarks, createBookmark, deleteBookmark } =
+    useContext(BookmarksContext);
+
+  const isRecipeBookmarked = useMemo(
+    () => bookmarks.some((bookmark) => bookmark.id === selectedRecipe.id),
+    [bookmarks, selectedRecipe]
+  );
+
   const handleBookmark = () => {
-    onBookmark(id);
+    if (isRecipeBookmarked) {
+      deleteBookmark(selectedRecipe.id);
+    } else {
+      createBookmark(selectedRecipe);
+    }
   };
 
   return (
     <div className="uppercase flex items-center pt-24 pb-12 pr-32 pl-32">
       <div className="flex mr-16 items-center">
         <GoClock className="mr-1" />
-        <div>{cookingTime} minutes</div>
+        <div>{selectedRecipe.cooking_time} minutes</div>
       </div>
       <div className="flex mr-16 items-center">
         <GoPerson className="mr-1" />
-        <div>{servings} servings</div>
+        <div>{selectedServings} servings</div>
         <CiCircleMinus
           className="ml-2 h-5 w-5"
           onClick={handleDecreaseServings}
@@ -31,9 +49,13 @@ function RecipeDetails({ cookingTime, servings, setServings, id, onBookmark }) {
       </div>
       <button
         className="rounded-full bg-gradient-to-br from-yellow-100 to-orange-500 h-10 w-10 flex items-center justify-center"
-        onClick={handleBookmark}
+        onClick={() => handleBookmark()}
       >
-        <GoBookmark className="text-white h-6 w-6" />
+        {isRecipeBookmarked ? (
+          <GoBookmarkFill className="text-white h-6 w-6" />
+        ) : (
+          <GoBookmark className="text-white h-6 w-6" />
+        )}
       </button>
     </div>
   );
