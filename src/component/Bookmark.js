@@ -1,8 +1,14 @@
-import { useState } from "react";
+import { useState, useEffect, useContext } from "react";
 import BookmarkList from "./BookmarkList";
+import BookmarksContext from "../context/BookmarksContext";
 
 function Bookmark() {
   const [showBookmarks, setShowBookmarks] = useState(false);
+  const { fetchBookmarks } = useContext(BookmarksContext);
+
+  useEffect(() => {
+    fetchBookmarks();
+  }, []);
 
   return (
     <div

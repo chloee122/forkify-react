@@ -4,13 +4,13 @@ import BookmarksContext from "../context/BookmarksContext";
 
 function BookmarkList() {
   const { bookmarks } = useContext(BookmarksContext);
-  const { handleSelectRecipe } = useContext(SelectedRecipeContext);
+  const { selectRecipe } = useContext(SelectedRecipeContext);
   const renderedBookmarks = bookmarks.map((bookmark) => {
     return (
       <div
         key={bookmark.id}
         className="group/item hover:bg-slate-100 flex"
-        onClick={() => handleSelectRecipe(bookmark.id)}
+        onClick={() => selectRecipe(bookmark.id)}
       >
         <img
           src={bookmark.imageUrl}

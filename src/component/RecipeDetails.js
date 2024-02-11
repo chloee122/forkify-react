@@ -5,15 +5,15 @@ import BookmarksContext from "../context/BookmarksContext";
 
 function RecipeDetails({
   selectedRecipe,
-  updatedServings,
-  setUpdatedServings,
+  selectedServings,
+  setSelectedServings,
 }) {
   const handleIncreaseServings = () => {
-    setUpdatedServings(updatedServings + 1);
+    setSelectedServings(selectedServings + 1);
   };
   const handleDecreaseServings = () => {
-    if (updatedServings === 1) return;
-    setUpdatedServings(updatedServings - 1);
+    if (selectedServings === 1) return;
+    setSelectedServings(selectedServings - 1);
   };
 
   const { bookmarks, createBookmark, deleteBookmark } =
@@ -40,7 +40,7 @@ function RecipeDetails({
       </div>
       <div className="flex mr-16 items-center">
         <GoPerson className="mr-1" />
-        <div>{updatedServings} servings</div>
+        <div>{selectedServings} servings</div>
         <CiCircleMinus
           className="ml-2 h-5 w-5"
           onClick={handleDecreaseServings}

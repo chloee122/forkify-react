@@ -10,19 +10,19 @@ const searchRecipes = async (term) => {
   return response.data.data;
 };
 
-const getRecipe = async (id) => {
+const selectRecipe = async (id) => {
   const response = await axios.get(
     `https://forkify-api.herokuapp.com/api/v2/recipes/${id}`
   );
   return response.data.data.recipe;
 };
 
-const getBookmarks = async () => {
+const fetchBookmarks = async () => {
   const response = await axios.get("http://localhost:3001/bookmarks");
   return response.data;
 };
 
-const addBookmark = async (recipe) => {
+const createBookmark = async (recipe) => {
   const response = await axios.post("http://localhost:3001/bookmarks", {
     id: recipe.id,
     title: recipe.title,
@@ -32,8 +32,14 @@ const addBookmark = async (recipe) => {
   return response.data;
 };
 
-const removeBookmark = async (id) => {
+const deleteBookmark = async (id) => {
   await axios.delete(`http://localhost:3001/bookmarks/${id}`);
 };
 
-export { searchRecipes, getRecipe, getBookmarks, addBookmark, removeBookmark };
+export {
+  searchRecipes,
+  selectRecipe,
+  fetchBookmarks,
+  createBookmark,
+  deleteBookmark,
+};

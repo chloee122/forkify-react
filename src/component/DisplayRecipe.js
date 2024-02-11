@@ -1,17 +1,20 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import RecipeDetails from "./RecipeDetails";
 import RecipeIngredients from "./RecipeIngredients";
 import RecipeDirection from "./RecipeDirection";
+import SelectedRecipeContext from "../context/SelectedRecipeContext";
 
-function DisplayRecipe({ selectedRecipe }) {
-  const [updatedServings, setUpdatedServings] = useState(
-    selectedRecipe.servings
+function DisplayRecipe() {
+  const { selectedRecipe } = useContext(SelectedRecipeContext);
+  const [selectedServings, setSelectedServings] = useState(
+    selectedRecipe?.servings || null
   );
 
   useEffect(() => {
-    setUpdatedServings(selectedRecipe.servings);
+    setSelectedServings(selectedRecipe?.servings);
   }, [selectedRecipe]);
 
+  if (!selectedRecipe) return;
   const content = (
     <div>
       <figure className="before:block before:h-100 before:w-100 before:absolute before:bg-slate-100 h-80 relative origin-top">
@@ -27,14 +30,14 @@ function DisplayRecipe({ selectedRecipe }) {
         </h1>
       </figure>
       <RecipeDetails
-        updatedServings={updatedServings}
-        setUpdatedServings={setUpdatedServings}
+        selectedServings={selectedServings}
+        setSelectedServings={setSelectedServings}
         selectedRecipe={selectedRecipe}
       />
 
       <RecipeIngredients
         selectedRecipe={selectedRecipe}
-        updatedServings={updatedServings}
+        selectedServings={selectedServings}
       />
       <RecipeDirection selectedRecipe={selectedRecipe} />
     </div>

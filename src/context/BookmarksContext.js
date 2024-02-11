@@ -1,22 +1,22 @@
 import { createContext, useState } from "react";
-import { getBookmarks, addBookmark, removeBookmark } from "../api";
+import * as api from "../api";
 
 const BookmarksContext = createContext();
 function BookmarksProvider({ children }) {
   const [bookmarks, setBookmarks] = useState([]);
 
   const fetchBookmarks = async () => {
-    const data = await getBookmarks();
+    const data = await api.fetchBookmarks();
     setBookmarks(data);
   };
 
   const createBookmark = async (recipe) => {
-    const data = await addBookmark(recipe);
+    const data = await api.createBookmark(recipe);
     setBookmarks([...bookmarks, data]);
   };
 
   const deleteBookmark = async (id) => {
-    await removeBookmark(id);
+    await api.deleteBookmark(id);
     setBookmarks(bookmarks.filter((bookmark) => bookmark.id !== id));
   };
 

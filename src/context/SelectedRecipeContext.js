@@ -1,19 +1,19 @@
 import { createContext, useState } from "react";
 
-import { getRecipe } from "../api";
+import * as api from "../api";
 
 const SelectedRecipeContext = createContext();
 function SelectedRecipeProvider({ children }) {
   const [selectedRecipe, setSelectedRecipe] = useState(null);
 
-  const handleSelectRecipe = async (id) => {
-    const result = await getRecipe(id);
+  const selectRecipe = async (id) => {
+    const result = await api.selectRecipe(id);
     setSelectedRecipe(result);
   };
 
   return (
     <SelectedRecipeContext.Provider
-      value={{ selectedRecipe, setSelectedRecipe, handleSelectRecipe }}
+      value={{ selectedRecipe, setSelectedRecipe, selectRecipe }}
     >
       {children}
     </SelectedRecipeContext.Provider>
