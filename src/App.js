@@ -4,6 +4,7 @@ import RecipeSearchForm from "./component/RecipeSearchForm";
 import RecipeList from "./component/RecipeList";
 import DisplayRecipe from "./component/DisplayRecipe";
 import Bookmark from "./component/Bookmark";
+import RecipeAddButton from "./component/RecipeAddButton";
 
 function App() {
   const [recipes, setRecipes] = useState([]);
@@ -17,6 +18,7 @@ function App() {
     <div>
       <div className="flex">
         <RecipeSearchForm handleSearch={handleSearch} />
+        <RecipeAddButton />
         <Bookmark />
       </div>
       <div className="flex">
