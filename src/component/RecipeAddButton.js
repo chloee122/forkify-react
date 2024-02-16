@@ -2,14 +2,19 @@ import { useState } from "react";
 import RecipeFormModal from "./RecipeFormModal";
 
 function RecipeAddButton() {
-  const [showRecipeForm, setShowRecipeForm] = useState(false);
+  const [showRecipeModal, setShowRecipeModal] = useState(false);
   const handleClick = () => {
-    setShowRecipeForm(!showRecipeForm);
+    setShowRecipeModal(true);
+    document.body.classList.add("overflow-hidden");
+  };
+  const handleClose = () => {
+    setShowRecipeModal(false);
+    document.body.classList.remove("overflow-hidden");
   };
   return (
-    <div>
+    <div className="relative">
       <button onClick={handleClick}>ADD RECIPE</button>
-      {showRecipeForm && <RecipeFormModal />}
+      {showRecipeModal && <RecipeFormModal onClose={handleClose} />}
     </div>
   );
 }
