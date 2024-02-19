@@ -4,6 +4,7 @@ import * as api from "../api";
 import SelectedRecipeContext from "../context/SelectedRecipeContext";
 import BookmarksContext from "../context/BookmarksContext";
 import Modal from "./Modal";
+import convertIngredient from "../utils/convertIngredient";
 
 const initialFormValue = {
   title: "TEST24",
@@ -11,8 +12,8 @@ const initialFormValue = {
   image_url:
     " http://forkify-api.herokuapp.com/images/BBQChickenPizzawithCauliflowerCrust5004699695624ce.jpg",
   publisher: "TEST24",
-  cooking_time: 40,
-  servings: 12,
+  cooking_time: 12,
+  servings: 4,
   ingredients: ["0.5,kg,Rice", "1,,Avocado", ",,salt", "", "", ""],
 };
 
@@ -56,16 +57,11 @@ function RecipeFormModal({ onClose }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const ingredients = [];
-    for (const ingredient of state.ingredients) {
-      if (ingredient === "") continue;
-      const parts = ingredient.split(",");
-      ingredients.push({
-        quantity: parts[0],
-        unit: parts[1],
-        description: parts[2],
-      });
-    }
+    const ingredients = state.ingredients
+      .filter((ingredient) => ingredient !== "")
+      .map(convertIngredient);
+
+    console.log(ingredients);
     const recipe = { ...state, ingredients };
 
     const response = await api.createRecipe(recipe);
@@ -74,22 +70,24 @@ function RecipeFormModal({ onClose }) {
     onClose();
   };
 
-  const recipeData = Object.keys(state).map((key) => {
-    return (
-      <div key={key}>
-        <label>{labelText[key]}</label>
-        <input
-          name={key}
-          type={
-            key === "cooking_time" || key === "servings" ? "number" : "text"
-          }
-          required
-          onChange={handleChange}
-          value={state[key] || 0}
-        />
-      </div>
-    );
-  });
+  const recipeData = Object.keys(state)
+    .filter((key) => key !== "ingredients")
+    .map((key) => {
+      const labelCheck = ["cooking_time", "servings"].includes(key);
+      return (
+        <div key={key}>
+          <label>{labelText[key]}</label>
+          <input
+            name={key}
+            type={labelCheck ? "number" : "text"}
+            required
+            onChange={handleChange}
+            value={state[key] || ""}
+            min={labelCheck ? 1 : undefined}
+          />
+        </div>
+      );
+    });
 
   const recipeIngredients = state.ingredients.map((_, index) => (
     <div key={index}>
@@ -107,7 +105,7 @@ function RecipeFormModal({ onClose }) {
   const form = (
     <form onSubmit={(e) => handleSubmit(e)}>
       <div className="flex justify-end">
-        <button onClick={onClose}>
+        <button type="button" onClick={onClose}>
           <GoX />
         </button>
       </div>
