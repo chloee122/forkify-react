@@ -1,4 +1,4 @@
-import { useReducer, useContext } from "react";
+import { useReducer, useContext, useState } from "react";
 import { GoX } from "react-icons/go";
 import * as api from "../api";
 import SelectedRecipeContext from "../context/SelectedRecipeContext";
@@ -46,6 +46,9 @@ function RecipeFormModal({ onClose }) {
   const [state, dispatch] = useReducer(recipeFormReducer, initialFormValue);
   const { selectRecipe } = useContext(SelectedRecipeContext);
   const { createBookmark } = useContext(BookmarksContext);
+  const [isLoading, setIsLoading] = useState(false)
+  const [errorMessage, setErrorMessage] = useState(null)
+  const [successMessage, setSuccessMessage] = useState(null)
 
   const handleChange = (e) => {
     dispatch({
@@ -54,22 +57,44 @@ function RecipeFormModal({ onClose }) {
       payload: e.target.value,
     });
   };
+  
+  const handleSuccess = () => {
+    setSuccessMessage("Recipe was successfully uploaded :)")
+    console.log("success",successMessage)
+    setIsLoading(false)
+    console.log("isLoading", isLoading)
+    if (successMessage) setTimeout(()=>onClose(),2000)
+  }
+
+  const handleError = (err) => {
+    setIsLoading(false)
+    setErrorMessage(err.message)
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true)
     const ingredients = state.ingredients
       .filter((ingredient) => ingredient !== "")
       .map(convertIngredient);
 
-    console.log(ingredients);
     const recipe = { ...state, ingredients };
-
-    const response = await api.createRecipe(recipe);
+    try{
+    const response = await api.createRecipe(recipe)
     selectRecipe(response.id);
     createBookmark(response);
-    onClose();
-  };
+    handleSuccess()
+    // setSuccessMessage("Recipe was successfully uploaded :)")
+  } catch(err) {
+    // setErrorMessage(err.message)
+    // console.error(err.message)
+    handleError(err)
+  } 
 
+  console.log(successMessage)
+  // if (successMessage) setTimeout(()=>onClose(), 2000)
+  };
+  console.log(successMessage)
   const recipeData = Object.keys(state)
     .filter((key) => key !== "ingredients")
     .map((key) => {
@@ -124,7 +149,16 @@ function RecipeFormModal({ onClose }) {
       <button>UPLOAD</button>
     </form>
   );
-  return <Modal onClose={onClose}>{form}</Modal>;
+   
+  let content = form
+  if (isLoading) {
+    content = "Loading"
+  } else if (errorMessage) {
+    content = errorMessage
+  } else if (successMessage) {
+    content = successMessage
+  }
+  return <Modal onClose={onClose}>{content}</Modal>;
 }
 
 export default RecipeFormModal;
