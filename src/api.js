@@ -9,7 +9,7 @@ const searchRecipes = async (term) => {
   return response.data.data;
 };
 
-const selectRecipe = async (id) => {
+const getRecipe = async (id) => {
   const response = await axios.get(`${ROOT_URL}/${id}`);
   return response.data.data.recipe;
 };
@@ -41,7 +41,7 @@ const deleteBookmark = async (id) => {
 
 export {
   searchRecipes,
-  selectRecipe,
+  getRecipe,
   createRecipe,
   getBookmarks,
   createBookmark,

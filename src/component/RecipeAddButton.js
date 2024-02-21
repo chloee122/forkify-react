@@ -7,6 +7,7 @@ function RecipeAddButton() {
     setShowRecipeModal(true);
     document.body.classList.add("overflow-hidden");
   };
+
   const handleClose = () => {
     setShowRecipeModal(false);
     document.body.classList.remove("overflow-hidden");

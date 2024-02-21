@@ -1,20 +1,39 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import RecipeDetails from "./RecipeDetails";
 import RecipeIngredients from "./RecipeIngredients";
 import RecipeDirection from "./RecipeDirection";
-import SelectedRecipeContext from "../context/SelectedRecipeContext";
+import * as api from "../api";
 
-function DisplayRecipe() {
-  const { selectedRecipe } = useContext(SelectedRecipeContext);
+function DisplayRecipe({ recipeId }) {
+  const [selectedRecipe, setSelectedRecipe] = useState(null);
+
   const [selectedServings, setSelectedServings] = useState(
     selectedRecipe?.servings || 0
   );
 
   useEffect(() => {
-    setSelectedServings(selectedRecipe?.servings);
-  }, [selectedRecipe]);
+    async function getRecipe() {
+      console.log("useEffect1");
+      if (!recipeId) return;
+      const response = await api.getRecipe(recipeId);
+      setSelectedRecipe(response);
+      console.log("finish response");
+    }
+    getRecipe();
+  }, [recipeId]);
 
-  if (!selectedRecipe) return;
+  // Refactor: how to combine these useEffect functions
+  useEffect(() => {
+    console.log("useEffect2");
+    setSelectedServings(selectedRecipe?.servings);
+  },[selectedRecipe]);
+
+  console.log("hello");
+
+  if (!selectedRecipe) {
+    console.log("Nothing to show", selectedRecipe, selectedServings);
+    return;
+  }
   const content = (
     <div>
       <figure className="before:block before:h-100 before:w-100 before:absolute before:bg-slate-100 h-80 relative origin-top">

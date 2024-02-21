@@ -1,36 +1,44 @@
-import { useState } from "react";
+import { useState, useEffect, useContext } from "react";
 import { searchRecipes } from "./api";
 import RecipeSearchForm from "./component/RecipeSearchForm";
 import RecipeList from "./component/RecipeList";
 import DisplayRecipe from "./component/DisplayRecipe";
 import Bookmark from "./component/Bookmark";
 import RecipeAddButton from "./component/RecipeAddButton";
-import Link from "./component/Link";
-import Route from "./component/Route"
-import RecipeFormModal from "./component/RecipeFormModal";
-
+import Route from "./component/Route";
+import { NavigationContext } from "./context/NavigationContext";
 
 function App() {
   const [recipes, setRecipes] = useState([]);
-  
+  const [recipePath, setRecipePath] = useState(null);
+  const { currentPath } = useContext(NavigationContext);
+
+  useEffect(() => {
+    if (currentPath.includes("/recipes"))
+      setRecipePath(window.location.pathname);
+  }, [currentPath]);
 
   const handleSearch = async (term) => {
     const results = await searchRecipes(term);
     setRecipes(results.recipes);
   };
 
+  const recipeId = window.location.pathname.includes("/recipes")
+    ? window.location.pathname.substring(9)
+    : undefined;
+  console.log("App renders");
   return (
     <div>
       <div className="flex">
         <RecipeSearchForm handleSearch={handleSearch} />
-        {/* <Link to="/AddRecipeForm">ADD RECIPE</Link> */}
-        {/* <Route path="/AddRecipeForm"><RecipeFormModal /></Route> */}
         <RecipeAddButton />
         <Bookmark />
       </div>
       <div className="flex">
         <RecipeList recipes={recipes} />
-        <DisplayRecipe />
+        <Route path={recipePath}>
+          <DisplayRecipe recipeId={recipeId} />
+        </Route>
       </div>
     </div>
   );

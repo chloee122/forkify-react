@@ -43,12 +43,12 @@ const HANDLE_INPUT = "handle_input";
 const HANDLE_INGREDIENT_INPUT = "handle_ingredient_input";
 
 function RecipeFormModal({ onClose }) {
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
   const [state, dispatch] = useReducer(recipeFormReducer, initialFormValue);
   const { selectRecipe } = useContext(SelectedRecipeContext);
   const { createBookmark } = useContext(BookmarksContext);
-  const [isLoading, setIsLoading] = useState(false)
-  const [errorMessage, setErrorMessage] = useState(null)
-  const [successMessage, setSuccessMessage] = useState(null)
 
   const handleChange = (e) => {
     dispatch({
@@ -57,44 +57,52 @@ function RecipeFormModal({ onClose }) {
       payload: e.target.value,
     });
   };
-  
+
+  const pause = (duration) => {
+    return new Promise((resolve) => {
+      setTimeout(resolve, duration);
+    });
+  };
   const handleSuccess = () => {
-    setSuccessMessage("Recipe was successfully uploaded :)")
-    console.log("success",successMessage)
-    setIsLoading(false)
-    console.log("isLoading", isLoading)
-    if (successMessage) setTimeout(()=>onClose(),2000)
-  }
+    setSuccessMessage("Recipe was successfully uploaded :)");
+    setIsLoading(false);
+
+    // if (successMessage) setTimeout(()=>onClose(),2000)
+  };
 
   const handleError = (err) => {
-    setIsLoading(false)
-    setErrorMessage(err.message)
-  }
+    setIsLoading(true);
+    console.log("isLoading", isLoading);
+    setErrorMessage(true);
+    console.log("fail", errorMessage);
+    if (errorMessage) setTimeout(() => onClose(), 2000);
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsLoading(true)
-    const ingredients = state.ingredients
-      .filter((ingredient) => ingredient !== "")
-      .map(convertIngredient);
+    try {
+      e.preventDefault();
+      setIsLoading(true);
+      console.log(isLoading);
+      const ingredients = state.ingredients
+        .filter((ingredient) => ingredient !== "")
+        .map(convertIngredient);
 
-    const recipe = { ...state, ingredients };
-    try{
-    const response = await api.createRecipe(recipe)
-    selectRecipe(response.id);
-    createBookmark(response);
-    handleSuccess()
-    // setSuccessMessage("Recipe was successfully uploaded :)")
-  } catch(err) {
-    // setErrorMessage(err.message)
-    // console.error(err.message)
-    handleError(err)
-  } 
+      const recipe = { ...state, ingredients };
 
-  console.log(successMessage)
-  // if (successMessage) setTimeout(()=>onClose(), 2000)
+      const response = await api.createRecipe(recipe);
+      await pause(5000);
+      selectRecipe(response.id);
+      createBookmark(response);
+      // handleSuccess();
+    } catch (err) {
+      // await pause(10000);
+      handleError(err);
+   
+      console.log("fail", errorMessage);
+    }
+    // console.log(errorMessage);
   };
-  console.log(successMessage)
+
   const recipeData = Object.keys(state)
     .filter((key) => key !== "ingredients")
     .map((key) => {
@@ -130,7 +138,8 @@ function RecipeFormModal({ onClose }) {
   const form = (
     <form onSubmit={(e) => handleSubmit(e)}>
       <div className="flex justify-end">
-        <button type="button" onClick={onClose}>
+        {/* <button type="button" onClick={onClose}> */}
+        <button type="button" onClick={handleError}>
           <GoX />
         </button>
       </div>
@@ -149,16 +158,8 @@ function RecipeFormModal({ onClose }) {
       <button>UPLOAD</button>
     </form>
   );
-   
-  let content = form
-  if (isLoading) {
-    content = "Loading"
-  } else if (errorMessage) {
-    content = errorMessage
-  } else if (successMessage) {
-    content = successMessage
-  }
-  return <Modal onClose={onClose}>{content}</Modal>;
+
+  return <Modal onClose={onClose}>{form}</Modal>;
 }
 
 export default RecipeFormModal;

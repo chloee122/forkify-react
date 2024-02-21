@@ -3,12 +3,14 @@ import SelectedRecipeContext from "../context/SelectedRecipeContext";
 import { NavigationContext } from "../context/NavigationContext";
 
 function RecipeListItem({ recipe }) {
-  const { selectRecipe } = useContext(SelectedRecipeContext);
-  const {navigate} = useContext(NavigationContext)
+  // const { selectRecipe } = useContext(SelectedRecipeContext);
+  // const {navigate} = useContext(NavigationContext)
+
+
   return (
     <div
-      onClick={() =>{selectRecipe(recipe.id)
-      navigate(`/${recipe.id}`)}}
+      // onClick={() =>{selectRecipe(recipe.id)
+      // navigate(`/${recipe.id}`)}}
       className="group/item hover:bg-slate-100 flex"
     >
       <img
