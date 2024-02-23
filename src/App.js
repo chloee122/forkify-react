@@ -14,6 +14,7 @@ function App() {
   const { currentPath } = useContext(NavigationContext);
 
   useEffect(() => {
+    
     if (currentPath.includes("/recipes"))
       setRecipePath(window.location.pathname);
   }, [currentPath]);
@@ -27,7 +28,7 @@ function App() {
     ? window.location.pathname.substring(9)
     : undefined;
 
-  console.log("App renders");
+
   return (
     <div>
       <div className="flex">

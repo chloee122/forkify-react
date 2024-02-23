@@ -3,7 +3,6 @@ function BookmarkListItem({ bookmark }) {
     <div
       key={bookmark.id}
       className="group/item hover:bg-slate-100 flex"
-      //   onClick={() => selectRecipe(bookmark.id)}
     >
       <img
         src={bookmark.imageUrl}

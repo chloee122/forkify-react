@@ -7,14 +7,14 @@ import Modal from "./Modal";
 import convertIngredient from "../utils/convertIngredient";
 
 const initialFormValue = {
-  title: "TEST24",
-  source_url: "TEST24",
-  image_url:
-    " http://forkify-api.herokuapp.com/images/BBQChickenPizzawithCauliflowerCrust5004699695624ce.jpg",
-  publisher: "TEST24",
+  title: "Test",
+  source_url: "www.test24.com",
+  image_url: "http://forkify-api.herokuapp.com/images/FlatBread21of1a180.jpg",
+  publisher: "Test24",
   cooking_time: 12,
   servings: 4,
-  ingredients: ["0.5,kg,Rice", "1,,Avocado", ",,salt", "", "", ""],
+  // ingredients: ["0.5,kg,Rice", "1,,Avocado", ",,salt", "", "", ""],
+  ingredients: ["", "", "", "", "", ""],
 };
 
 const recipeFormReducer = (state, action) => {
@@ -69,19 +69,21 @@ function RecipeFormModal({ onClose }) {
   };
 
   const handleSubmit = async (e) => {
-    setErrorMessage(null);
     try {
+      setErrorMessage(null);
       e.preventDefault();
       setIsLoading(true);
+
       const ingredients = state.ingredients
         .filter((ingredient) => ingredient !== "")
         .map(convertIngredient);
 
-      const recipe = { ...state, ingredients };
+      if (ingredients.some((ingredient) => ingredient === null))
+        throw Error("Input format was not correct! Please try again :)");
 
+      const recipe = { ...state, ingredients };
       const response = await api.createRecipe(recipe);
 
-      // selectRecipe(response.id);
       navigate(`/recipes/${response.id}`);
       createBookmark(response);
       handleSuccess();
@@ -149,7 +151,7 @@ function RecipeFormModal({ onClose }) {
         </div>
       </div>
 
-      <button>
+      <button disabled={isLoading}>
         {isLoading ? <GoSync className="animate-spin" /> : "UPLOAD"}
       </button>
     </form>

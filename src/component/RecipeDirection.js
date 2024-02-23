@@ -1,6 +1,5 @@
 import { GoArrowRight } from "react-icons/go";
 function RecipeDirections({ selectedRecipe: { source_url, publisher } }) {
-  console.log(source_url);
   return (
     <div className="bg-slate-200">
       <h2>How to cook it</h2>

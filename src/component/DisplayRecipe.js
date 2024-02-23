@@ -13,24 +13,18 @@ function DisplayRecipe({ recipeId }) {
 
   useEffect(() => {
     async function getRecipe() {
-      console.log("useEffect1");
       if (!recipeId) return;
       const response = await api.getRecipe(recipeId);
       setSelectedRecipe(response);
-      console.log("finish response");
     }
     getRecipe();
   }, [recipeId]);
 
   useEffect(() => {
-    console.log("useEffect2");
     setSelectedServings(selectedRecipe?.servings);
   }, [selectedRecipe]);
 
-  console.log("hello");
-
   if (!selectedRecipe) {
-    console.log("Nothing to show", selectedRecipe, selectedServings);
     return;
   }
   const content = (
