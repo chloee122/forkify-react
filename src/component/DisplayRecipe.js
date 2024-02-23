@@ -22,11 +22,10 @@ function DisplayRecipe({ recipeId }) {
     getRecipe();
   }, [recipeId]);
 
-  // Refactor: how to combine these useEffect functions
   useEffect(() => {
     console.log("useEffect2");
     setSelectedServings(selectedRecipe?.servings);
-  },[selectedRecipe]);
+  }, [selectedRecipe]);
 
   console.log("hello");
 

@@ -1,8 +1,8 @@
-import { useReducer, useContext, useState } from "react";
-import { GoX } from "react-icons/go";
+import { useReducer, useContext, useState, useEffect } from "react";
+import { GoX, GoSync } from "react-icons/go";
 import * as api from "../api";
-import SelectedRecipeContext from "../context/SelectedRecipeContext";
 import BookmarksContext from "../context/BookmarksContext";
+import { NavigationContext } from "../context/NavigationContext";
 import Modal from "./Modal";
 import convertIngredient from "../utils/convertIngredient";
 
@@ -45,9 +45,9 @@ const HANDLE_INGREDIENT_INPUT = "handle_ingredient_input";
 function RecipeFormModal({ onClose }) {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
-  const [successMessage, setSuccessMessage] = useState(null);
+  const [isSuccessful, setIsSuccessful] = useState(null);
   const [state, dispatch] = useReducer(recipeFormReducer, initialFormValue);
-  const { selectRecipe } = useContext(SelectedRecipeContext);
+  const { navigate } = useContext(NavigationContext);
   const { createBookmark } = useContext(BookmarksContext);
 
   const handleChange = (e) => {
@@ -58,31 +58,21 @@ function RecipeFormModal({ onClose }) {
     });
   };
 
-  const pause = (duration) => {
-    return new Promise((resolve) => {
-      setTimeout(resolve, duration);
-    });
-  };
   const handleSuccess = () => {
-    setSuccessMessage("Recipe was successfully uploaded :)");
     setIsLoading(false);
-
-    // if (successMessage) setTimeout(()=>onClose(),2000)
+    setIsSuccessful("Recipe was successfully uploaded :)");
   };
 
   const handleError = (err) => {
-    setIsLoading(true);
-    console.log("isLoading", isLoading);
-    setErrorMessage(true);
-    console.log("fail", errorMessage);
-    if (errorMessage) setTimeout(() => onClose(), 2000);
+    setIsLoading(false);
+    setErrorMessage(err.message);
   };
 
   const handleSubmit = async (e) => {
+    setErrorMessage(null);
     try {
       e.preventDefault();
       setIsLoading(true);
-      console.log(isLoading);
       const ingredients = state.ingredients
         .filter((ingredient) => ingredient !== "")
         .map(convertIngredient);
@@ -90,18 +80,23 @@ function RecipeFormModal({ onClose }) {
       const recipe = { ...state, ingredients };
 
       const response = await api.createRecipe(recipe);
-      await pause(5000);
-      selectRecipe(response.id);
+
+      // selectRecipe(response.id);
+      navigate(`/recipes/${response.id}`);
       createBookmark(response);
-      // handleSuccess();
+      handleSuccess();
     } catch (err) {
-      // await pause(10000);
       handleError(err);
-   
-      console.log("fail", errorMessage);
     }
-    // console.log(errorMessage);
   };
+
+  useEffect(() => {
+    if (isSuccessful) {
+      setTimeout(() => {
+        onClose();
+      }, 2000);
+    }
+  }, [isSuccessful]);
 
   const recipeData = Object.keys(state)
     .filter((key) => key !== "ingredients")
@@ -138,8 +133,7 @@ function RecipeFormModal({ onClose }) {
   const form = (
     <form onSubmit={(e) => handleSubmit(e)}>
       <div className="flex justify-end">
-        {/* <button type="button" onClick={onClose}> */}
-        <button type="button" onClick={handleError}>
+        <button type="button" onClick={onClose}>
           <GoX />
         </button>
       </div>
@@ -155,11 +149,19 @@ function RecipeFormModal({ onClose }) {
         </div>
       </div>
 
-      <button>UPLOAD</button>
+      <button>
+        {isLoading ? <GoSync className="animate-spin" /> : "UPLOAD"}
+      </button>
     </form>
   );
 
-  return <Modal onClose={onClose}>{form}</Modal>;
+  const content = isSuccessful ? <p>{isSuccessful}</p> : form;
+  return (
+    <Modal onClose={onClose}>
+      {content}
+      <p>{errorMessage && errorMessage}</p>
+    </Modal>
+  );
 }
 
 export default RecipeFormModal;

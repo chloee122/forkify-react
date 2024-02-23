@@ -21,7 +21,7 @@ function RecipeList({ recipes }) {
 
   const renderedRecipes = getRecipeListByCurrentPageNumber().map((recipe) => {
     return (
-      <Link key={recipe.id} to={`/recipes/${recipe.id}` }>
+      <Link key={recipe.id} to={`/recipes/${recipe.id}`}>
         <RecipeListItem recipe={recipe} />
       </Link>
     );

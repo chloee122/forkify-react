@@ -26,6 +26,7 @@ function App() {
   const recipeId = window.location.pathname.includes("/recipes")
     ? window.location.pathname.substring(9)
     : undefined;
+
   console.log("App renders");
   return (
     <div>
