@@ -1,8 +1,8 @@
-import axios from "axios";
+import axios from 'axios';
 
 const apiKey = process.env.REACT_APP_API_KEY;
-const ROOT_URL = "https://forkify-api.herokuapp.com/api/v2/recipes";
-const BOOKMARK_DB_URL = "http://localhost:3001/bookmarks";
+const ROOT_URL = 'https://forkify-api.herokuapp.com/api/v2/recipes';
+const BOOKMARK_DB_URL = 'http://localhost:3001/bookmarks';
 
 const searchRecipes = async (term) => {
   const response = await axios.get(`${ROOT_URL}?search=${term}&key=${apiKey}`);

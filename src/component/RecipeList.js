@@ -1,7 +1,7 @@
-import { useState, useEffect, useCallback } from "react";
-import RecipeListItem from "./RecipeListItem";
-import Pagination from "./Pagination";
-import Link from "./Link";
+import { useState, useEffect, useCallback } from 'react';
+import RecipeListItem from './RecipeListItem';
+import Pagination from './Pagination';
+import Link from './Link';
 
 const RECORDS_PER_PAGE = 10;
 function RecipeList({ recipes }) {

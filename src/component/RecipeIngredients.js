@@ -1,4 +1,4 @@
-import { Fraction } from "fractional";
+import { Fraction } from 'fractional';
 
 function RecipeIngredients({
   selectedRecipe: { ingredients, servings: defaultServing },
@@ -9,7 +9,7 @@ function RecipeIngredients({
       ? new Fraction(
           (ingredient.quantity * selectedServings) / defaultServing
         ).toString()
-      : "";
+      : '';
     return (
       <div key={index}>
         {quantity} {ingredient.unit} {ingredient.description}
