@@ -43,9 +43,12 @@ const HANDLE_INGREDIENT_INPUT = "handle_ingredient_input";
 
 function RecipeFormModal({ onClose }) {
   const [isLoading, setIsLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(null);
-  const [successMessage, setSuccessMessage] = useState(null);
-  const [state, dispatch] = useReducer(recipeFormReducer, initialFormValue);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const [recipeFormState, dispatch] = useReducer(
+    recipeFormReducer,
+    initialFormValue
+  );
   const { navigate } = useContext(NavigationContext);
   const { createBookmark } = useContext(BookmarksContext);
 
@@ -72,7 +75,7 @@ function RecipeFormModal({ onClose }) {
       setErrorMessage(null);
       e.preventDefault();
       setIsLoading(true);
-      const recipe = makeRecipe(state);
+      const recipe = makeRecipe(recipeFormState);
       const response = await api.createRecipe(recipe);
 
       navigate(`/recipes/${response.id}`);
@@ -91,7 +94,7 @@ function RecipeFormModal({ onClose }) {
     }
   }, [successMessage, onClose]);
 
-  const recipeData = Object.keys(state)
+  const recipeData = Object.keys(recipeFormState)
     .filter((key) => key !== "ingredients")
     .map((key) => {
       const labelCheck = ["cooking_time", "servings"].includes(key);
@@ -103,14 +106,14 @@ function RecipeFormModal({ onClose }) {
             type={labelCheck ? "number" : "text"}
             required
             onChange={handleChange}
-            value={state[key] || ""}
+            value={recipeFormState[key] || ""}
             min={labelCheck ? 1 : undefined}
           />
         </div>
       );
     });
 
-  const recipeIngredients = state.ingredients.map((_, index) => (
+  const recipeIngredients = recipeFormState.ingredients.map((_, index) => (
     <div key={index}>
       <label>Ingredient {index + 1}</label>
       <input
@@ -118,7 +121,7 @@ function RecipeFormModal({ onClose }) {
         type="text"
         placeholder="Format: 'Quantity, Unit, Description'"
         onChange={handleChange}
-        value={state.ingredients[index]}
+        value={recipeFormState.ingredients[index]}
       />
     </div>
   ));

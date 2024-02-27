@@ -5,6 +5,8 @@ import RecipeDirection from "./RecipeDirection";
 import * as api from "../api";
 import { NavigationContext } from "../context/NavigationContext";
 
+const STARTING_INDEX_OF_RECIPE_ID = 9;
+
 function DisplayRecipe() {
   const [selectedRecipe, setSelectedRecipe] = useState(null);
 
@@ -12,7 +14,7 @@ function DisplayRecipe() {
     selectedRecipe?.servings || 0
   );
   const { currentPath } = useContext(NavigationContext);
-  const recipeId = currentPath.substring(9);
+  const recipeId = currentPath.substring(STARTING_INDEX_OF_RECIPE_ID);
 
   useEffect(() => {
     async function getRecipe() {

@@ -4,20 +4,16 @@ const convertIngredient = (text) => {
   return { quantity: Number(parts[0]), unit: parts[1], description: parts[2] };
 };
 
-const makeRecipe = (state) => {
-  try {
-    const ingredients = state.ingredients
-      .filter((ingredient) => ingredient !== "")
-      .map(convertIngredient);
+const makeRecipe = (recipe) => {
+  const ingredients = recipe.ingredients
+    .filter((ingredient) => ingredient !== "")
+    .map(convertIngredient);
 
-    if (ingredients.some((ingredient) => ingredient === null))
-      throw Error("Input format was not correct! Please try again :)");
+  if (ingredients.some((ingredient) => ingredient === null))
+    throw Error("Input format was not correct! Please try again :)");
 
-    const recipe = { ...state, ingredients };
-    return recipe;
-  } catch (err) {
-    throw err;
-  }
+  const newRecipe = { ...recipe, ingredients };
+  return newRecipe;
 };
 
 export { convertIngredient, makeRecipe };

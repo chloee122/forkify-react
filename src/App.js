@@ -7,8 +7,6 @@ import Bookmark from "./component/Bookmark";
 import RecipeAddButton from "./component/RecipeAddButton";
 import Route from "./component/Route";
 
-const RECIPE_PATH = /\/recipes\//;
-
 function App() {
   const [recipes, setRecipes] = useState([]);
 
@@ -26,7 +24,7 @@ function App() {
       </div>
       <div className="flex">
         <RecipeList recipes={recipes} />
-        <Route path={RECIPE_PATH}>
+        <Route path="/recipes/">
           <DisplayRecipe />
         </Route>
       </div>
