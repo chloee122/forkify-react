@@ -9,10 +9,23 @@ import Route from "./component/Route";
 
 function App() {
   const [recipes, setRecipes] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleSearch = async (term) => {
-    const results = await searchRecipes(term);
-    setRecipes(results.recipes);
+    try {
+      setRecipes([]);
+      setIsLoading(true);
+      const results = await searchRecipes(term);
+      if (results.recipes.length === 0)
+        throw Error("No recipe was found! Try other recipes");
+      setIsLoading(false);
+      setRecipes(results.recipes);
+    } catch (err) {
+      console.error(err);
+      setIsLoading(false);
+      setErrorMessage(err.message);
+    }
   };
 
   return (
@@ -23,7 +36,11 @@ function App() {
         <Bookmark />
       </div>
       <div className="flex">
-        <RecipeList recipes={recipes} />
+        <RecipeList
+          recipes={recipes}
+          isLoading={isLoading}
+          errorMessage={errorMessage}
+        />
         <Route path="/recipes/">
           <DisplayRecipe />
         </Route>

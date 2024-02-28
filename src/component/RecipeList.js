@@ -1,10 +1,11 @@
-import { useState, useEffect, useCallback } from 'react';
-import RecipeListItem from './RecipeListItem';
-import Pagination from './Pagination';
-import Link from './Link';
+import { useState, useEffect, useCallback } from "react";
+import RecipeListItem from "./RecipeListItem";
+import Pagination from "./Pagination";
+import Link from "./Link";
+import { GoSync } from "react-icons/go";
 
 const RECORDS_PER_PAGE = 10;
-function RecipeList({ recipes }) {
+function RecipeList({ recipes, isLoading, errorMessage }) {
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
@@ -27,9 +28,13 @@ function RecipeList({ recipes }) {
     );
   });
 
+  console.log(isLoading);
+  console.log(recipes);
   return (
     <div>
-      <div>{renderedRecipes}</div>
+      <div>
+        {isLoading ? <GoSync className="animate-spin" /> : renderedRecipes}
+      </div>
       {getRecipeListByCurrentPageNumber().length !== 0 && (
         <Pagination
           currentPage={currentPage}
