@@ -2,7 +2,7 @@ import { useState } from "react";
 import { searchRecipes } from "./api";
 import RecipeSearchForm from "./component/RecipeSearchForm";
 import RecipeList from "./component/RecipeList";
-import DisplayRecipe from "./component/DisplayRecipe";
+import Recipe from "./component/Recipe";
 import Bookmark from "./component/Bookmark";
 import RecipeAddButton from "./component/RecipeAddButton";
 import Route from "./component/Route";
@@ -12,19 +12,27 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
+  const handleSuccess = (data) => {
+    setIsLoading(false);
+    setRecipes(data.recipes);
+  };
+
+  const handleError = (err) => {
+    setIsLoading(false);
+    setErrorMessage(err.message);
+  };
+
   const handleSearch = async (term) => {
     try {
+      setErrorMessage("");
       setRecipes([]);
       setIsLoading(true);
       const results = await searchRecipes(term);
       if (results.recipes.length === 0)
         throw Error("No recipe was found! Try other recipes");
-      setIsLoading(false);
-      setRecipes(results.recipes);
+      handleSuccess(results);
     } catch (err) {
-      console.error(err);
-      setIsLoading(false);
-      setErrorMessage(err.message);
+      handleError(err);
     }
   };
 
@@ -42,7 +50,7 @@ function App() {
           errorMessage={errorMessage}
         />
         <Route path="/recipes/">
-          <DisplayRecipe />
+          <Recipe />
         </Route>
       </div>
     </div>

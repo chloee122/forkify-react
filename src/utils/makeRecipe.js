@@ -12,8 +12,7 @@ const makeRecipe = (recipe) => {
   if (ingredients.some((ingredient) => ingredient === null))
     throw Error("Input format was not correct! Please try again :)");
 
-  const newRecipe = { ...recipe, ingredients };
-  return newRecipe;
+  return { ...recipe, ingredients };
 };
 
 export { convertIngredient, makeRecipe };

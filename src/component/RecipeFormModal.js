@@ -1,5 +1,5 @@
 import { useReducer, useContext, useState, useEffect } from "react";
-import { GoX, GoSync } from "react-icons/go";
+import { GoX, GoSync, GoAlert } from "react-icons/go";
 import * as api from "../api";
 import BookmarksContext from "../context/BookmarksContext";
 import { NavigationContext } from "../context/NavigationContext";
@@ -151,11 +151,16 @@ function RecipeFormModal({ onClose }) {
     </form>
   );
 
-  const content = successMessage ? <p>{successMessage}</p> : form;
+  const renderedError = errorMessage ? (
+    <div>
+      <GoAlert />
+      <p>{errorMessage}</p>
+    </div>
+  ) : null;
   return (
     <Modal onClose={onClose}>
-      {content}
-      <p>{errorMessage && errorMessage}</p>
+      {successMessage ? <p>{successMessage}</p> : form}
+      {renderedError}
     </Modal>
   );
 }

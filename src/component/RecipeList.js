@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import RecipeListItem from "./RecipeListItem";
 import Pagination from "./Pagination";
 import Link from "./Link";
-import { GoSync } from "react-icons/go";
+import { GoSync, GoAlert } from "react-icons/go";
 
 const RECORDS_PER_PAGE = 10;
 function RecipeList({ recipes, isLoading, errorMessage }) {
@@ -28,13 +28,17 @@ function RecipeList({ recipes, isLoading, errorMessage }) {
     );
   });
 
-  console.log(isLoading);
-  console.log(recipes);
+  const renderedError = errorMessage ? (
+    <div>
+      <GoAlert />
+      <p>{errorMessage}</p>
+    </div>
+  ) : null;
+
   return (
     <div>
-      <div>
-        {isLoading ? <GoSync className="animate-spin" /> : renderedRecipes}
-      </div>
+      {isLoading ? <GoSync className="animate-spin" /> : renderedRecipes}
+      {renderedError}
       {getRecipeListByCurrentPageNumber().length !== 0 && (
         <Pagination
           currentPage={currentPage}
