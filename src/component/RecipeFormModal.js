@@ -94,6 +94,15 @@ function RecipeFormModal({ onClose }) {
     }
   }, [successMessage, onClose]);
 
+  useEffect(() => {
+    document.body.classList.add("overflow-hidden");
+
+    return () => {
+      document.body.classList.remove("overflow-hidden");
+      console.log("eyyo");
+    };
+  }, []);
+
   const recipeData = Object.keys(recipeFormState)
     .filter((key) => key !== "ingredients")
     .map((key) => {

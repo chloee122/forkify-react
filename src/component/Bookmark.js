@@ -1,6 +1,6 @@
-import { useState, useEffect, useContext } from 'react';
-import BookmarkList from './BookmarkList';
-import BookmarksContext from '../context/BookmarksContext';
+import { useState, useEffect, useContext } from "react";
+import BookmarkList from "./BookmarkList";
+import BookmarksContext from "../context/BookmarksContext";
 
 function Bookmark() {
   const [showBookmarks, setShowBookmarks] = useState(false);
@@ -16,7 +16,7 @@ function Bookmark() {
       onMouseLeave={() => setShowBookmarks(false)}
     >
       <button>BOOKMARKS</button>
-      {showBookmarks && <BookmarkList />}
+      {showBookmarks && <BookmarkList setShowBookmarks={setShowBookmarks} />}
     </div>
   );
 }
