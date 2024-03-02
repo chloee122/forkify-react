@@ -5,10 +5,9 @@ import RecipeDirection from "./RecipeDirection";
 import * as api from "../api";
 import { NavigationContext } from "../context/NavigationContext";
 
-
 const STARTING_INDEX_OF_RECIPE_ID = 9;
 
-function DisplayRecipe() {
+function Recipe() {
   const [selectedRecipe, setSelectedRecipe] = useState(null);
 
   const [selectedServings, setSelectedServings] = useState(
@@ -30,7 +29,7 @@ function DisplayRecipe() {
   }, [selectedRecipe]);
 
   if (!selectedRecipe) {
-    return 
+    return;
   }
   const content = (
     <div>
@@ -61,4 +60,4 @@ function DisplayRecipe() {
   );
   return content;
 }
-export default DisplayRecipe;
+export default Recipe;

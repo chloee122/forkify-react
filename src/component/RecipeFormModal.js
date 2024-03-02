@@ -1,10 +1,11 @@
 import { useReducer, useContext, useState, useEffect } from "react";
-import { GoX, GoSync, GoAlert } from "react-icons/go";
+import { GoX, GoSync } from "react-icons/go";
 import * as api from "../api";
 import BookmarksContext from "../context/BookmarksContext";
 import { NavigationContext } from "../context/NavigationContext";
 import Modal from "./Modal";
 import { makeRecipe } from "../utils/makeRecipe";
+import ErrorMessage from "./ErrorMessage";
 
 const initialFormValue = {
   title: "",
@@ -99,7 +100,6 @@ function RecipeFormModal({ onClose }) {
 
     return () => {
       document.body.classList.remove("overflow-hidden");
-      console.log("eyyo");
     };
   }, []);
 
@@ -160,16 +160,10 @@ function RecipeFormModal({ onClose }) {
     </form>
   );
 
-  const renderedError = errorMessage ? (
-    <div>
-      <GoAlert />
-      <p>{errorMessage}</p>
-    </div>
-  ) : null;
   return (
     <Modal onClose={onClose}>
       {successMessage ? <p>{successMessage}</p> : form}
-      {renderedError}
+      {errorMessage && <ErrorMessage message={errorMessage} />}
     </Modal>
   );
 }

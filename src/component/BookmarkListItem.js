@@ -1,9 +1,9 @@
-function BookmarkListItem({ bookmark, handleClick }) {
+function BookmarkListItem({ bookmark, closeBookmarks }) {
   return (
     <div
       key={bookmark.id}
       className="group/item hover:bg-slate-100 flex"
-      onClick={handleClick}
+      onClick={closeBookmarks}
     >
       <img
         src={bookmark.imageUrl}

@@ -37,21 +37,23 @@ function App() {
   };
 
   return (
-    <div>
-      <div className="flex">
-        <RecipeSearchForm handleSearch={handleSearch} />
-        <RecipeAddButton />
-        <Bookmark />
-      </div>
-      <div className="flex">
-        <RecipeList
-          recipes={recipes}
-          isLoading={isLoading}
-          errorMessage={errorMessage}
-        />
-        <Route path="/recipes/">
-          <Recipe />
-        </Route>
+    <div className="w-screen h-lvh h-max bg-gradient-to-br from-primary via-gradient1 to-gradient2">
+      <div className="max-w-7xl min-h-6xl bg-slate-100 m-auto rounded-lg">
+        <div className="flex">
+          <RecipeSearchForm handleSearch={handleSearch} />
+          <RecipeAddButton />
+          <Bookmark />
+        </div>
+        <div className="flex">
+          <RecipeList
+            recipes={recipes}
+            isLoading={isLoading}
+            errorMessage={errorMessage}
+          />
+          <Route path="/recipes/">
+            <Recipe />
+          </Route>
+        </div>
       </div>
     </div>
   );

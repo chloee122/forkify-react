@@ -5,14 +5,14 @@ import Link from "./Link";
 
 function BookmarkList({ setShowBookmarks }) {
   const { bookmarks } = useContext(BookmarksContext);
-  const handleClick = () => {
+  const closeBookmarks = () => {
     setShowBookmarks(false);
   };
 
   const renderedBookmarks = bookmarks.map((bookmark) => {
     return (
       <Link key={bookmark.id} to={`/recipes/${bookmark.id}`}>
-        <BookmarkListItem bookmark={bookmark} handleClick={handleClick} />
+        <BookmarkListItem bookmark={bookmark} closeBookmarks={closeBookmarks} />
       </Link>
     );
   });
