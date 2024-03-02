@@ -5,11 +5,11 @@ function RecipeAddButton() {
   const [showRecipeModal, setShowRecipeModal] = useState(false);
   const handleClick = () => {
     setShowRecipeModal(true);
-    document.body.classList.add("overflow-hidden");
+    // document.body.classList.add('overflow-hidden');
   };
   const handleClose = () => {
     setShowRecipeModal(false);
-    document.body.classList.remove("overflow-hidden");
+    // document.body.classList.remove('overflow-hidden');
   };
   return (
     <div className="relative">

@@ -1,20 +1,20 @@
-import { useReducer, useContext } from "react";
-import { GoX } from "react-icons/go";
+import { useReducer, useContext, useState, useEffect } from "react";
+import { GoX, GoSync } from "react-icons/go";
 import * as api from "../api";
-import SelectedRecipeContext from "../context/SelectedRecipeContext";
 import BookmarksContext from "../context/BookmarksContext";
+import { NavigationContext } from "../context/NavigationContext";
 import Modal from "./Modal";
-import convertIngredient from "../utils/convertIngredient";
+import { makeRecipe } from "../utils/makeRecipe";
+import ErrorMessage from "./ErrorMessage";
 
 const initialFormValue = {
-  title: "TEST24",
-  source_url: "TEST24",
-  image_url:
-    " http://forkify-api.herokuapp.com/images/BBQChickenPizzawithCauliflowerCrust5004699695624ce.jpg",
-  publisher: "TEST24",
-  cooking_time: 12,
-  servings: 4,
-  ingredients: ["0.5,kg,Rice", "1,,Avocado", ",,salt", "", "", ""],
+  title: "",
+  source_url: "",
+  image_url: "http://forkify-api.herokuapp.com/images/FlatBread21of1a180.jpg",
+  publisher: "",
+  cooking_time: 0,
+  servings: 0,
+  ingredients: ["", "", "", "", "", ""],
 };
 
 const recipeFormReducer = (state, action) => {
@@ -43,8 +43,14 @@ const HANDLE_INPUT = "handle_input";
 const HANDLE_INGREDIENT_INPUT = "handle_ingredient_input";
 
 function RecipeFormModal({ onClose }) {
-  const [state, dispatch] = useReducer(recipeFormReducer, initialFormValue);
-  const { selectRecipe } = useContext(SelectedRecipeContext);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const [recipeFormState, dispatch] = useReducer(
+    recipeFormReducer,
+    initialFormValue
+  );
+  const { navigate } = useContext(NavigationContext);
   const { createBookmark } = useContext(BookmarksContext);
 
   const handleChange = (e) => {
@@ -55,22 +61,49 @@ function RecipeFormModal({ onClose }) {
     });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const ingredients = state.ingredients
-      .filter((ingredient) => ingredient !== "")
-      .map(convertIngredient);
-
-    console.log(ingredients);
-    const recipe = { ...state, ingredients };
-
-    const response = await api.createRecipe(recipe);
-    selectRecipe(response.id);
-    createBookmark(response);
-    onClose();
+  const handleSuccess = () => {
+    setIsLoading(false);
+    setSuccessMessage("Recipe was successfully uploaded :)");
   };
 
-  const recipeData = Object.keys(state)
+  const handleError = (err) => {
+    setIsLoading(false);
+    setErrorMessage(err.message);
+  };
+
+  const handleSubmit = async (e) => {
+    try {
+      setErrorMessage(null);
+      e.preventDefault();
+      setIsLoading(true);
+      const recipe = makeRecipe(recipeFormState);
+      const response = await api.createRecipe(recipe);
+
+      navigate(`/recipes/${response.id}`);
+      createBookmark(response);
+      handleSuccess();
+    } catch (err) {
+      handleError(err);
+    }
+  };
+
+  useEffect(() => {
+    if (successMessage) {
+      setTimeout(() => {
+        onClose();
+      }, 2000);
+    }
+  }, [successMessage, onClose]);
+
+  useEffect(() => {
+    document.body.classList.add("overflow-hidden");
+
+    return () => {
+      document.body.classList.remove("overflow-hidden");
+    };
+  }, []);
+
+  const recipeData = Object.keys(recipeFormState)
     .filter((key) => key !== "ingredients")
     .map((key) => {
       const labelCheck = ["cooking_time", "servings"].includes(key);
@@ -82,14 +115,14 @@ function RecipeFormModal({ onClose }) {
             type={labelCheck ? "number" : "text"}
             required
             onChange={handleChange}
-            value={state[key] || ""}
+            value={recipeFormState[key] || ""}
             min={labelCheck ? 1 : undefined}
           />
         </div>
       );
     });
 
-  const recipeIngredients = state.ingredients.map((_, index) => (
+  const recipeIngredients = recipeFormState.ingredients.map((_, index) => (
     <div key={index}>
       <label>Ingredient {index + 1}</label>
       <input
@@ -97,7 +130,7 @@ function RecipeFormModal({ onClose }) {
         type="text"
         placeholder="Format: 'Quantity, Unit, Description'"
         onChange={handleChange}
-        value={state.ingredients[index]}
+        value={recipeFormState.ingredients[index]}
       />
     </div>
   ));
@@ -121,10 +154,18 @@ function RecipeFormModal({ onClose }) {
         </div>
       </div>
 
-      <button>UPLOAD</button>
+      <button disabled={isLoading}>
+        {isLoading ? <GoSync className="animate-spin" /> : "UPLOAD"}
+      </button>
     </form>
   );
-  return <Modal onClose={onClose}>{form}</Modal>;
+
+  return (
+    <Modal onClose={onClose}>
+      {successMessage ? <p>{successMessage}</p> : form}
+      {errorMessage && <ErrorMessage message={errorMessage} />}
+    </Modal>
+  );
 }
 
 export default RecipeFormModal;

@@ -1,5 +1,5 @@
-import { useMemo } from "react";
-import { GoArrowRight, GoArrowLeft } from "react-icons/go";
+import { useMemo } from 'react';
+import { GoArrowRight, GoArrowLeft } from 'react-icons/go';
 
 function Pagination({ totalPages, currentPage, setCurrentPage }) {
   const { previousPage, nextPage } = useMemo(() => {
@@ -38,14 +38,14 @@ function Pagination({ totalPages, currentPage, setCurrentPage }) {
     <div>
       <button onClick={goToPreviousPage}>
         {previousPage && (
-          <div className="flex">
+          <div className='flex'>
             <GoArrowLeft /> Page {previousPage}
           </div>
         )}
       </button>
       <button onClick={goToNextPage}>
         {nextPage && (
-          <div className="flex">
+          <div className='flex'>
             Page {nextPage} <GoArrowRight />
           </div>
         )}

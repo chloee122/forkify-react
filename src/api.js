@@ -1,15 +1,15 @@
-import axios from "axios";
+import axios from 'axios';
 
 const apiKey = process.env.REACT_APP_API_KEY;
-const ROOT_URL = "https://forkify-api.herokuapp.com/api/v2/recipes";
-const BOOKMARK_DB_URL = "http://localhost:3001/bookmarks";
+const ROOT_URL = 'https://forkify-api.herokuapp.com/api/v2/recipes';
+const BOOKMARK_DB_URL = 'http://localhost:3001/bookmarks';
 
 const searchRecipes = async (term) => {
   const response = await axios.get(`${ROOT_URL}?search=${term}&key=${apiKey}`);
   return response.data.data;
 };
 
-const selectRecipe = async (id) => {
+const getRecipe = async (id) => {
   const response = await axios.get(`${ROOT_URL}/${id}`);
   return response.data.data.recipe;
 };
@@ -41,7 +41,7 @@ const deleteBookmark = async (id) => {
 
 export {
   searchRecipes,
-  selectRecipe,
+  getRecipe,
   createRecipe,
   getBookmarks,
   createBookmark,

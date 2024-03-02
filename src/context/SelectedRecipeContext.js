@@ -1,13 +1,13 @@
-import { createContext, useState } from "react";
+import { createContext, useState } from 'react';
 
-import * as api from "../api";
+import * as api from '../api';
 
 const SelectedRecipeContext = createContext();
 function SelectedRecipeProvider({ children }) {
   const [selectedRecipe, setSelectedRecipe] = useState(null);
 
   const selectRecipe = async (id) => {
-    const result = await api.selectRecipe(id);
+    const result = await api.getRecipe(id);
     setSelectedRecipe(result);
   };
 

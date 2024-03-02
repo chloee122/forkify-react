@@ -1,9 +1,12 @@
 import { useState, useEffect, useCallback } from "react";
 import RecipeListItem from "./RecipeListItem";
 import Pagination from "./Pagination";
+import Link from "./Link";
+import { GoSync } from "react-icons/go";
+import ErrorMessage from "./ErrorMessage";
 
 const RECORDS_PER_PAGE = 10;
-function RecipeList({ recipes }) {
+function RecipeList({ recipes, isLoading, errorMessage }) {
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
@@ -18,13 +21,18 @@ function RecipeList({ recipes }) {
     return recipes.slice(startIndex, endIndex);
   }, [currentPage, recipes]);
 
-  const renderedRecipes = getRecipeListByCurrentPageNumber().map((recipe) => (
-    <RecipeListItem key={recipe.id} recipe={recipe} />
-  ));
+  const renderedRecipes = getRecipeListByCurrentPageNumber().map((recipe) => {
+    return (
+      <Link key={recipe.id} to={`/recipes/${recipe.id}`}>
+        <RecipeListItem recipe={recipe} />
+      </Link>
+    );
+  });
 
   return (
     <div>
-      <div>{renderedRecipes}</div>
+      {isLoading ? <GoSync className="animate-spin" /> : renderedRecipes}
+      {errorMessage && <ErrorMessage message={errorMessage} />}
       {getRecipeListByCurrentPageNumber().length !== 0 && (
         <Pagination
           currentPage={currentPage}

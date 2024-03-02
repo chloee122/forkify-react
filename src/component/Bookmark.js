@@ -16,7 +16,7 @@ function Bookmark() {
       onMouseLeave={() => setShowBookmarks(false)}
     >
       <button>BOOKMARKS</button>
-      {showBookmarks && <BookmarkList />}
+      {showBookmarks && <BookmarkList setShowBookmarks={setShowBookmarks} />}
     </div>
   );
 }
