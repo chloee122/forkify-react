@@ -7,7 +7,7 @@ import Modal from "./Modal";
 import { makeRecipe } from "../utils/makeRecipe";
 import ErrorMessage from "./ErrorMessage";
 
-export interface FormValues {
+export interface RecipeFormState {
   title: string;
   source_url: string;
   image_url: string;
@@ -20,8 +20,18 @@ export interface FormValues {
 interface RecipeFormModalProps {
   onClose: () => void;
 }
+enum RecipeFormActionKind {
+  HANDLE_INPUT = "handle_input",
+  HANDLE_INGREDIENT_INPUT = "handle_ingredient_input",
+}
 
-const initialFormValue: FormValues = {
+interface RecipeFormAction {
+  type: RecipeFormActionKind;
+  field: string | number;
+  payload: string | number;
+}
+
+const initialFormValue = {
   title: "",
   source_url: "",
   image_url: "http://forkify-api.herokuapp.com/images/FlatBread21of1a180.jpg",
@@ -31,7 +41,10 @@ const initialFormValue: FormValues = {
   ingredients: ["", "", "", "", "", ""],
 };
 
-const recipeFormReducer = (state, action) => {
+const recipeFormReducer = (
+  state: RecipeFormState,
+  action: RecipeFormAction
+) => {
   switch (action.type) {
     case HANDLE_INPUT:
       return { ...state, [action.field]: action.payload };
@@ -80,14 +93,14 @@ function RecipeFormModal({ onClose }: RecipeFormModalProps) {
     setSuccessMessage("Recipe was successfully uploaded :)");
   };
 
-  const handleError = (err) => {
+  const handleError = (err: Error) => {
     setIsLoading(false);
     setErrorMessage(err.message);
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
-      setErrorMessage(null);
+      setErrorMessage("");
       e.preventDefault();
       setIsLoading(true);
       const recipe = makeRecipe(recipeFormState);
@@ -97,7 +110,7 @@ function RecipeFormModal({ onClose }: RecipeFormModalProps) {
       createBookmark(response);
       handleSuccess();
     } catch (err) {
-      handleError(err);
+      if (err instanceof Error) handleError(err);
     }
   };
 
@@ -136,18 +149,20 @@ function RecipeFormModal({ onClose }: RecipeFormModalProps) {
       );
     });
 
-  const recipeIngredients = recipeFormState.ingredients.map((_, index) => (
-    <div key={index}>
-      <label>Ingredient {index + 1}</label>
-      <input
-        id={index}
-        type="text"
-        placeholder="Format: 'Quantity, Unit, Description'"
-        onChange={handleChange}
-        value={recipeFormState.ingredients[index]}
-      />
-    </div>
-  ));
+  const recipeIngredients = recipeFormState.ingredients.map(
+    (_: string, index: string) => (
+      <div key={index}>
+        <label>Ingredient {index + 1}</label>
+        <input
+          id={index}
+          type="text"
+          placeholder="Format: 'Quantity, Unit, Description'"
+          onChange={handleChange}
+          value={recipeFormState.ingredients[index]}
+        />
+      </div>
+    )
+  );
 
   const form = (
     <form onSubmit={(e) => handleSubmit(e)}>
