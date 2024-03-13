@@ -7,7 +7,21 @@ import Modal from "./Modal";
 import { makeRecipe } from "../utils/makeRecipe";
 import ErrorMessage from "./ErrorMessage";
 
-const initialFormValue = {
+export interface FormValues {
+  title: string;
+  source_url: string;
+  image_url: string;
+  publisher: string;
+  cooking_time: number;
+  servings: number;
+  ingredients: string[];
+}
+
+interface RecipeFormModalProps {
+  onClose: () => void;
+}
+
+const initialFormValue: FormValues = {
   title: "",
   source_url: "",
   image_url: "http://forkify-api.herokuapp.com/images/FlatBread21of1a180.jpg",
@@ -42,7 +56,7 @@ const labelText = {
 const HANDLE_INPUT = "handle_input";
 const HANDLE_INGREDIENT_INPUT = "handle_ingredient_input";
 
-function RecipeFormModal({ onClose }) {
+function RecipeFormModal({ onClose }: RecipeFormModalProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
@@ -53,7 +67,7 @@ function RecipeFormModal({ onClose }) {
   const { navigate } = useContext(NavigationContext);
   const { createBookmark } = useContext(BookmarksContext);
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch({
       type: e.target.name ? HANDLE_INPUT : HANDLE_INGREDIENT_INPUT,
       field: e.target.name || e.target.id,
