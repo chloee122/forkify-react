@@ -17,21 +17,26 @@ export interface RecipeFormState {
   ingredients: string[];
 }
 
-interface RecipeFormModalProps {
-  onClose: () => void;
-}
 enum RecipeFormActionKind {
   HANDLE_INPUT = "handle_input",
   HANDLE_INGREDIENT_INPUT = "handle_ingredient_input",
 }
 
-interface RecipeFormAction {
-  type: RecipeFormActionKind;
-  field: string | number;
-  payload: string | number;
+interface RecipeFormInputAction {
+  type: RecipeFormActionKind.HANDLE_INPUT;
+  field: string;
+  payload: string;
 }
 
-const initialFormValue = {
+interface RecipeFormIngredientAction {
+  type: RecipeFormActionKind.HANDLE_INGREDIENT_INPUT;
+  field: number;
+  payload: string;
+}
+
+type RecipeFormAction = RecipeFormInputAction | RecipeFormIngredientAction;
+
+const initialFormValue: RecipeFormState = {
   title: "",
   source_url: "",
   image_url: "http://forkify-api.herokuapp.com/images/FlatBread21of1a180.jpg",
@@ -46,9 +51,9 @@ const recipeFormReducer = (
   action: RecipeFormAction
 ) => {
   switch (action.type) {
-    case HANDLE_INPUT:
+    case RecipeFormActionKind.HANDLE_INPUT:
       return { ...state, [action.field]: action.payload };
-    case HANDLE_INGREDIENT_INPUT:
+    case RecipeFormActionKind.HANDLE_INGREDIENT_INPUT:
       const ingredients = [...state.ingredients];
       ingredients[action.field] = action.payload;
       return { ...state, ingredients };
@@ -57,7 +62,15 @@ const recipeFormReducer = (
   }
 };
 
-const labelText = {
+interface LabelText {
+  title: string;
+  source_url: string;
+  image_url: string;
+  publisher: string;
+  cooking_time: string;
+  servings: string;
+}
+const labelText: LabelText = {
   title: "Title",
   source_url: "URL",
   image_url: "Image URL",
@@ -66,8 +79,9 @@ const labelText = {
   servings: "Servings",
 };
 
-const HANDLE_INPUT = "handle_input";
-const HANDLE_INGREDIENT_INPUT = "handle_ingredient_input";
+interface RecipeFormModalProps {
+  onClose: () => void;
+}
 
 function RecipeFormModal({ onClose }: RecipeFormModalProps) {
   const [isLoading, setIsLoading] = useState(false);
@@ -81,11 +95,20 @@ function RecipeFormModal({ onClose }: RecipeFormModalProps) {
   const { createBookmark } = useContext(BookmarksContext);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch({
-      type: e.target.name ? HANDLE_INPUT : HANDLE_INGREDIENT_INPUT,
-      field: e.target.name || e.target.id,
-      payload: e.target.value,
-    });
+    if (e.target.name) {
+      dispatch({
+        type: RecipeFormActionKind.HANDLE_INPUT,
+
+        field: e.target.name,
+        payload: e.target.value,
+      });
+    } else {
+      dispatch({
+        type: RecipeFormActionKind.HANDLE_INGREDIENT_INPUT,
+        field: Number(e.target.id),
+        payload: e.target.value,
+      });
+    }
   };
 
   const handleSuccess = () => {
@@ -130,13 +153,15 @@ function RecipeFormModal({ onClose }: RecipeFormModalProps) {
     };
   }, []);
 
-  const recipeData = Object.keys(recipeFormState)
+  const recipeData = (Object.keys(recipeFormState) as (keyof RecipeFormState)[])
     .filter((key) => key !== "ingredients")
     .map((key) => {
       const labelCheck = ["cooking_time", "servings"].includes(key);
       return (
         <div key={key}>
-          <label>{labelText[key]}</label>
+          <label>
+            {labelText[key as keyof Omit<RecipeFormState, "ingredients">]}
+          </label>
           <input
             name={key}
             type={labelCheck ? "number" : "text"}
@@ -150,11 +175,11 @@ function RecipeFormModal({ onClose }: RecipeFormModalProps) {
     });
 
   const recipeIngredients = recipeFormState.ingredients.map(
-    (_: string, index: string) => (
+    (_: string, index: number) => (
       <div key={index}>
         <label>Ingredient {index + 1}</label>
         <input
-          id={index}
+          id={String(index)}
           type="text"
           placeholder="Format: 'Quantity, Unit, Description'"
           onChange={handleChange}

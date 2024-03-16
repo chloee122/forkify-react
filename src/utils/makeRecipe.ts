@@ -1,4 +1,4 @@
-import type { FormValues } from "../component/RecipeFormModal";
+import type { RecipeFormState } from "../component/RecipeFormModal";
 
 const convertIngredient = (text: string) => {
   const parts = text.split(",");
@@ -6,7 +6,7 @@ const convertIngredient = (text: string) => {
   return { quantity: Number(parts[0]), unit: parts[1], description: parts[2] };
 };
 
-const makeRecipe = (recipe: FormValues) => {
+const makeRecipe = (recipe: RecipeFormState) => {
   const ingredients = recipe.ingredients
     .filter((ingredient) => ingredient !== "")
     .map(convertIngredient);
