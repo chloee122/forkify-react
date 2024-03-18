@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import RecipeDetails from "./RecipeDetails";
 import RecipeIngredients from "./RecipeIngredients";
 import RecipeDirection from "./RecipeDirection";
-import * as api from "../api";
+import * as api from "../api/api";
 import { NavigationContext } from "../context/NavigationContext";
 
 const STARTING_INDEX_OF_RECIPE_ID = 9;

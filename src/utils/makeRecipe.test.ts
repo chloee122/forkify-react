@@ -12,64 +12,46 @@ describe("convertIngredient", () => {
 });
 
 describe("makeRecipe", () => {
-  it("should return a correct recipe when processing a list of valid ingredient strings", () => {
-    const recipe = {
-      title: "Vietnamese Pho",
-      source_url: "www.mapcancook",
-      image_url:
-        "http://forkify-api.herokuapp.com/images/FlatBread21of1a180.jpg",
-      publisher: "Mappinen",
-      cooking_time: 0,
-      servings: 0,
-      ingredients: ["1,kg,Rice", "1,kg,Avocado"],
-    };
-    const convertedRecipe = {
-      title: "Vietnamese Pho",
-      source_url: "www.mapcancook",
-      image_url:
-        "http://forkify-api.herokuapp.com/images/FlatBread21of1a180.jpg",
-      publisher: "Mappinen",
-      cooking_time: 0,
-      servings: 0,
+  const recipe = {
+    title: "Vietnamese Pho",
+    source_url: "www.mapcancook",
+    image_url: "http://forkify-api.herokuapp.com/images/FlatBread21of1a180.jpg",
+    publisher: "Mappinen",
+    cooking_time: 0,
+    servings: 0,
+  };
+
+  const convertedRecipe = {
+    title: "Vietnamese Pho",
+    source_url: "www.mapcancook",
+    image_url: "http://forkify-api.herokuapp.com/images/FlatBread21of1a180.jpg",
+    publisher: "Mappinen",
+    cooking_time: 0,
+    servings: 0,
+  };
+
+  it("should return a correct recipe when processing a recipe object containing a list of valid ingredient strings", () => {
+    expect(
+      makeRecipe({ ...recipe, ingredients: ["1,kg,Rice", "1,kg,Avocado"] })
+    ).toEqual({
+      ...convertedRecipe,
       ingredients: [
         { quantity: 1, unit: "kg", description: "Rice" },
         { quantity: 1, unit: "kg", description: "Avocado" },
       ],
-    };
-    expect(makeRecipe(recipe)).toEqual(convertedRecipe);
+    });
   });
 
-  it("should return correct indredient strings when processing a list of ingredient strings", () => {
-    const recipe = {
-      title: "Vietnamese Pho",
-      source_url: "www.mapcancook",
-      image_url:
-        "http://forkify-api.herokuapp.com/images/FlatBread21of1a180.jpg",
-      publisher: "Mappinen",
-      cooking_time: 0,
-      servings: 0,
-      ingredients: ["1,kg,Rice", ""],
-    };
-    const convertedRecipe = {
-      title: "Vietnamese Pho",
+  it("should return a correct recipe when processing a recipe object containing a list of valid ingredient strings and empty strings", () => {
+    expect(makeRecipe({ ...recipe, ingredients: ["1,kg,Rice", ""] })).toEqual({
+      ...convertedRecipe,
       ingredients: [{ quantity: 1, unit: "kg", description: "Rice" }],
-    };
-    expect(makeRecipe(recipe)).toEqual(convertedRecipe);
+    });
   });
 
-  it("should throw error when processing a list of invalid ingredient strings", () => {
-    const recipe = {
-      title: "Vietnamese Pho",
-      source_url: "www.mapcancook",
-      image_url:
-        "http://forkify-api.herokuapp.com/images/FlatBread21of1a180.jpg",
-      publisher: "Mappinen",
-      cooking_time: 0,
-      servings: 0,
-      ingredients: ["1,kg,Rice", "1kgAvocado"],
-    };
+  it("should throw error when processing a recipe object containing a list of invalid ingredient strings", () => {
     expect(() => {
-      makeRecipe(recipe);
+      makeRecipe({ ...recipe, ingredients: ["1,kg,Rice", "1kgAvocado"] });
     }).toThrow();
   });
 });

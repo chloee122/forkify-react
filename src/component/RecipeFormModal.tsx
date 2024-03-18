@@ -1,6 +1,6 @@
 import { useReducer, useContext, useState, useEffect } from "react";
 import { GoX, GoSync } from "react-icons/go";
-import * as api from "../api";
+import * as api from "../api/api";
 import BookmarksContext from "../context/BookmarksContext";
 import { NavigationContext } from "../context/NavigationContext";
 import Modal from "./Modal";
@@ -62,14 +62,8 @@ const recipeFormReducer = (
   }
 };
 
-interface LabelText {
-  title: string;
-  source_url: string;
-  image_url: string;
-  publisher: string;
-  cooking_time: string;
-  servings: string;
-}
+type LabelText = { [key in keyof RecipeFormState]?: string };
+
 const labelText: LabelText = {
   title: "Title",
   source_url: "URL",
@@ -98,7 +92,6 @@ function RecipeFormModal({ onClose }: RecipeFormModalProps) {
     if (e.target.name) {
       dispatch({
         type: RecipeFormActionKind.HANDLE_INPUT,
-
         field: e.target.name,
         payload: e.target.value,
       });
@@ -159,9 +152,7 @@ function RecipeFormModal({ onClose }: RecipeFormModalProps) {
       const labelCheck = ["cooking_time", "servings"].includes(key);
       return (
         <div key={key}>
-          <label>
-            {labelText[key as keyof Omit<RecipeFormState, "ingredients">]}
-          </label>
+          <label>{labelText[key]}</label>
           <input
             name={key}
             type={labelCheck ? "number" : "text"}

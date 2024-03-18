@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { searchRecipes } from "./api";
+import { searchRecipes } from "./api/api";
 import RecipeSearchForm from "./component/RecipeSearchForm";
 import RecipeList from "./component/RecipeList";
 import Recipe from "./component/Recipe";

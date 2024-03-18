@@ -1,6 +1,7 @@
 import type { RecipeFormState } from "../component/RecipeFormModal";
+import { ConvertedIngredient } from "../api/makeRecipeType";
 
-const convertIngredient = (text: string) => {
+const convertIngredient = (text: string): ConvertedIngredient | null => {
   const parts = text.split(",");
   if (parts.length !== 3) return null;
   return { quantity: Number(parts[0]), unit: parts[1], description: parts[2] };
@@ -11,10 +12,11 @@ const makeRecipe = (recipe: RecipeFormState) => {
     .filter((ingredient) => ingredient !== "")
     .map(convertIngredient);
 
-  if (ingredients.some((ingredient) => ingredient === null))
+  if (ingredients.includes(null)) {
     throw Error("Input format was not correct! Please try again :)");
+  }
 
-  return { ...recipe, ingredients };
+  return { ...recipe, ingredients: ingredients as ConvertedIngredient[] };
 };
 
 export { convertIngredient, makeRecipe };
