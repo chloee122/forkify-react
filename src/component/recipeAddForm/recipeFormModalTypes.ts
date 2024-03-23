@@ -1,9 +1,9 @@
 export interface RecipeFormState {
   title: string;
-  source_url: string;
-  image_url: string;
+  sourceUrl: string;
+  imageUrl: string;
   publisher: string;
-  cooking_time: number;
+  cookingTime: number;
   servings: number;
   ingredients: string[];
 }

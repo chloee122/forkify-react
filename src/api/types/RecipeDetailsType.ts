@@ -1,16 +1,12 @@
-export interface ConvertedIngredient {
-  quantity: number;
-  unit: string;
-  description: string;
-}
+import { IngredientType } from "./IngredientType";
 
 export interface RecipeDetailsType {
   id: string;
   title: string;
-  source_url: string;
-  image_url: string;
+  sourceUrl: string;
+  imageUrl: string;
   publisher: string;
-  cooking_time: number;
+  cookingTime: number;
   servings: number;
-  ingredients: ConvertedIngredient[];
+  ingredients: IngredientType[];
 }

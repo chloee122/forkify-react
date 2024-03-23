@@ -42,7 +42,7 @@ function RecipeDetails({
     <div className="uppercase flex items-center pt-24 pb-12 pr-32 pl-32">
       <div className="flex mr-16 items-center">
         <GoClock className="mr-1" />
-        <div>{selectedRecipe.cooking_time} minutes</div>
+        <div>{selectedRecipe.cookingTime} minutes</div>
       </div>
       <div className="flex mr-16 items-center">
         <GoPerson className="mr-1" />

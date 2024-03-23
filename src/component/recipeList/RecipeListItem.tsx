@@ -8,7 +8,7 @@ function RecipeListItem({ recipe }: RecipeListItemProps) {
   return (
     <div className="group/item hover:bg-slate-100 flex">
       <img
-        src={recipe.image_url}
+        src={recipe.imageUrl}
         alt={recipe.title}
         className="h-10 w-10 rounded-full "
       ></img>

@@ -6,20 +6,14 @@ import Recipe from "./component/recipe/Recipe";
 import Bookmark from "./component/bookmark/Bookmark";
 import RecipeAddButton from "./component/header/recipeAddButton/RecipeAddButton";
 import Route from "./component/navigation/Route";
-
-interface RecipeDetails {
-  id: string;
-  title: string;
-  image_url: string;
-  publisher: string;
-}
+import { RecipeType } from "./api/types/RecipeType";
 
 function App() {
-  const [recipes, setRecipes] = useState<RecipeDetails[]>([]);
+  const [recipes, setRecipes] = useState<RecipeType[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  const handleSuccess = (recipes: RecipeDetails[]) => {
+  const handleSuccess = (recipes: RecipeType[]) => {
     setIsLoading(false);
     setRecipes(recipes);
   };
@@ -34,10 +28,10 @@ function App() {
       setErrorMessage("");
       setRecipes([]);
       setIsLoading(true);
-      const results = await searchRecipes(term);
-      if (results.recipes.length === 0)
+      const recipes = await searchRecipes(term);
+      if (recipes.length === 0)
         throw Error("No recipe was found! Try other recipes");
-      handleSuccess(results.recipes);
+      handleSuccess(recipes);
     } catch (err) {
       if (err instanceof Error) handleError(err);
     }

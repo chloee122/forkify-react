@@ -1,6 +1,6 @@
 export interface RecipeType {
   id: string;
   title: string;
-  image_url: string;
+  imageUrl: string;
   publisher: string;
 }

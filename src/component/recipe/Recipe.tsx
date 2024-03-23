@@ -18,8 +18,8 @@ function Recipe() {
 
   useEffect(() => {
     async function getRecipe() {
-      const response = await api.getRecipe(recipeId);
-      setSelectedRecipe(response);
+      const recipe = await api.getRecipe(recipeId);
+      setSelectedRecipe(recipe);
     }
     getRecipe();
   }, [recipeId]);
@@ -37,7 +37,7 @@ function Recipe() {
       <figure className="before:block before:h-100 before:w-100 before:absolute before:bg-slate-100 h-80 relative origin-top">
         <img
           className="object-cover block h-full w-full"
-          src={selectedRecipe.image_url}
+          src={selectedRecipe.imageUrl}
           alt={selectedRecipe.title}
         />
         <h1 className="absolute bottom-0 left-1/2  -translate-x-2/4 translate-y-1/4 -skew-y-6 text-white text-5xl w-1/2 uppercase leading-loose text-center">

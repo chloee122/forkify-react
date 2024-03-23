@@ -4,7 +4,7 @@ import * as api from "../../api/queries/api";
 import Modal from "./Modal";
 import { convertIngredients } from "../../utils/convertIngredients";
 import ErrorMessage from "../shared/ErrorMessage";
-import { RecipeDetailsType } from "../../api/types/RecipeDetailsType";
+import { CreatedRecipeType } from "../../api/types/RecipeDetailsResponse";
 import {
   RecipeFormState,
   RecipeFormAction,
@@ -15,10 +15,10 @@ import useNavigationContext from "../../hooks/useNavigationContext";
 
 const initialFormValue: RecipeFormState = {
   title: "",
-  source_url: "",
-  image_url: "http://forkify-api.herokuapp.com/images/FlatBread21of1a180.jpg",
+  sourceUrl: "",
+  imageUrl: "http://forkify-api.herokuapp.com/images/FlatBread21of1a180.jpg",
   publisher: "",
-  cooking_time: 0,
+  cookingTime: 0,
   servings: 0,
   ingredients: ["", "", "", "", "", ""],
 };
@@ -43,10 +43,10 @@ type LabelText = { [key in keyof RecipeFormState]?: string };
 
 const labelText: LabelText = {
   title: "Title",
-  source_url: "URL",
-  image_url: "Image URL",
+  sourceUrl: "URL",
+  imageUrl: "Image URL",
   publisher: "publisher",
-  cooking_time: "Prep time",
+  cookingTime: "Prep time",
   servings: "Servings",
 };
 
@@ -96,14 +96,23 @@ function RecipeFormModal({ onClose }: RecipeFormModalProps) {
       setErrorMessage("");
       e.preventDefault();
       setIsLoading(true);
-      const recipe: Omit<RecipeDetailsType, "id"> = {
+      const recipe = {
         ...recipeFormState,
         ingredients: convertIngredients(recipeFormState.ingredients),
       };
-      const response = await api.createRecipe(recipe);
+      const recipeToCreate: CreatedRecipeType = {
+        title: recipe.title,
+        source_url: recipe.sourceUrl,
+        image_url: recipe.imageUrl,
+        publisher: recipe.publisher,
+        cooking_time: recipe.cookingTime,
+        servings: recipe.servings,
+        ingredients: recipe.ingredients,
+      };
+      const createdRecipe = await api.createRecipe(recipeToCreate);
 
-      navigate(`/recipes/${response.id}`);
-      createBookmark(response);
+      navigate(`/recipes/${createdRecipe.id}`);
+      createBookmark(createdRecipe);
       handleSuccess();
     } catch (err) {
       if (err instanceof Error) handleError(err);

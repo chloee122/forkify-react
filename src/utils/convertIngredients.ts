@@ -1,9 +1,8 @@
-// import { ConvertedIngredient } from "./convertRecipeTypes";
-import { ConvertedIngredient } from "../api/types/RecipeDetailsType";
+import { IngredientType } from "../api/types/IngredientType";
 
 const convertIngredients = (ingredients: string[]) => {
   const newIngredients = ingredients.reduce(
-    (acc: ConvertedIngredient[], ingredient) => {
+    (acc: IngredientType[], ingredient) => {
       if (ingredient === "") return acc;
       const parts = ingredient.split(",");
 

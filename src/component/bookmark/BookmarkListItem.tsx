@@ -13,7 +13,7 @@ function BookmarkListItem({ bookmark, closeBookmarks }: BookmarkListItemProps) {
       onClick={closeBookmarks}
     >
       <img
-        src={bookmark.image_url}
+        src={bookmark.imageUrl}
         alt={bookmark.title}
         className="h-10 w-10 rounded-full "
       ></img>
