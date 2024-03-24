@@ -4,10 +4,10 @@ import Pagination from "./pagination/Pagination";
 import Link from "../navigation/Link";
 import { GoSync } from "react-icons/go";
 import ErrorMessage from "../shared/ErrorMessage";
-import { RecipeType } from "../../api/types/RecipeType";
+import { SimpleRecipe } from "../../common/internal";
 
 interface RecipeListProps {
-  recipes: RecipeType[];
+  recipes: SimpleRecipe[];
   isLoading: boolean;
   errorMessage: string;
 }

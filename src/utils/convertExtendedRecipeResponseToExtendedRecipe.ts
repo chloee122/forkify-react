@@ -1,9 +1,9 @@
-import { RecipeDetailsResponse } from "../api/types/RecipeDetailsResponse";
-import { RecipeDetailsType } from "../api/types/RecipeDetailsType";
+import { ExtendedRecipeResponse } from "../common/api.type";
+import { ExtendedRecipe } from "../common/internal";
 
-export const convertRecipeDetails = (
-  recipe: RecipeDetailsResponse
-): RecipeDetailsType => {
+export const convertExtendedRecipeResponseToExtendedRecipe = (
+  recipe: ExtendedRecipeResponse
+): ExtendedRecipe => {
   return {
     id: recipe.id,
     title: recipe.title,

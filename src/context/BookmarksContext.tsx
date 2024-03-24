@@ -1,16 +1,16 @@
 import { createContext, useState } from "react";
-import * as api from "../api/queries/api";
-import { RecipeType } from "../api/types/RecipeType";
+import * as api from "../api/api";
+import { Bookmark } from "../common/internal";
 
 interface BookmarkProviderProps {
   children: React.ReactNode;
 }
 
 interface ContextType {
-  bookmarks: RecipeType[];
-  setBookmarks: (bookmarks: RecipeType[]) => void;
+  bookmarks: Bookmark[];
+  setBookmarks: (bookmarks: Bookmark[]) => void;
   getBookmarks: () => void;
-  createBookmark: (recipe: RecipeType) => void;
+  createBookmark: (recipe: Bookmark) => void;
   deleteBookmark: (id: string) => void;
 }
 
@@ -23,7 +23,7 @@ function BookmarksProvider({ children }: BookmarkProviderProps) {
     setBookmarks(data);
   };
 
-  const createBookmark = async (recipe: RecipeType) => {
+  const createBookmark = async (recipe: Bookmark) => {
     const data = await api.createBookmark(recipe);
     setBookmarks([...bookmarks, data]);
   };

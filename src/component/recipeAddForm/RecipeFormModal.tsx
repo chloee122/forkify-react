@@ -1,17 +1,17 @@
 import { useReducer, useState, useEffect } from "react";
 import { GoX, GoSync } from "react-icons/go";
-import * as api from "../../api/queries/api";
+import * as api from "../../api/api";
 import Modal from "./Modal";
 import { convertIngredients } from "../../utils/convertIngredients";
 import ErrorMessage from "../shared/ErrorMessage";
-import { CreatedRecipeType } from "../../api/types/RecipeDetailsResponse";
 import {
   RecipeFormState,
   RecipeFormAction,
   RecipeFormActionKind,
-} from "./recipeFormModalTypes";
+} from "./recipeFormModal.types";
 import useBookmarksContext from "../../hooks/useBookmarksContext";
 import useNavigationContext from "../../hooks/useNavigationContext";
+import convertToCreateRecipeRequest from "../../utils/convertToCreateRecipeRequest.ts";
 
 const initialFormValue: RecipeFormState = {
   title: "",
@@ -100,15 +100,7 @@ function RecipeFormModal({ onClose }: RecipeFormModalProps) {
         ...recipeFormState,
         ingredients: convertIngredients(recipeFormState.ingredients),
       };
-      const recipeToCreate: CreatedRecipeType = {
-        title: recipe.title,
-        source_url: recipe.sourceUrl,
-        image_url: recipe.imageUrl,
-        publisher: recipe.publisher,
-        cooking_time: recipe.cookingTime,
-        servings: recipe.servings,
-        ingredients: recipe.ingredients,
-      };
+      const recipeToCreate = convertToCreateRecipeRequest(recipe);
       const createdRecipe = await api.createRecipe(recipeToCreate);
 
       navigate(`/recipes/${createdRecipe.id}`);

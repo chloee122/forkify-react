@@ -1,7 +1,7 @@
-import { RecipeType } from "../../api/types/RecipeType";
+import { SimpleRecipe } from "../../common/internal";
 
 interface RecipeListItemProps {
-  recipe: RecipeType;
+  recipe: SimpleRecipe;
 }
 
 function RecipeListItem({ recipe }: RecipeListItemProps) {

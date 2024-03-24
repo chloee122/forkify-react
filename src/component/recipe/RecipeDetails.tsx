@@ -2,10 +2,10 @@ import { GoClock, GoPerson, GoBookmark, GoBookmarkFill } from "react-icons/go";
 import { CiCirclePlus, CiCircleMinus } from "react-icons/ci";
 import { useMemo } from "react";
 import useBookmarksContext from "../../hooks/useBookmarksContext";
-import { RecipeDetailsType } from "../../api/types/RecipeDetailsType";
+import { ExtendedRecipe } from "../../common/internal";
 
 interface RecipeDetailsProps {
-  selectedRecipe: RecipeDetailsType;
+  selectedRecipe: ExtendedRecipe;
   selectedServings: number;
   setSelectedServings: (servings: number) => void;
 }

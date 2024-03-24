@@ -1,4 +1,4 @@
-import { IngredientType } from "../api/types/IngredientType";
+import { IngredientType } from "../common/internal";
 
 const convertIngredients = (ingredients: string[]) => {
   const newIngredients = ingredients.reduce(

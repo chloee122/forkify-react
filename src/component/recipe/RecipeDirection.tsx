@@ -1,8 +1,8 @@
 import { GoArrowRight } from "react-icons/go";
-import { RecipeDetailsType } from "../../api/types/RecipeDetailsType";
+import { ExtendedRecipe } from "../../common/internal";
 
 interface RecipeDirectionsProps {
-  selectedRecipe: RecipeDetailsType;
+  selectedRecipe: ExtendedRecipe;
 }
 function RecipeDirections({
   selectedRecipe: { sourceUrl, publisher },

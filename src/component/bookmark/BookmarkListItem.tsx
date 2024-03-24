@@ -1,7 +1,7 @@
-import { RecipeType } from "../../api/types/RecipeType";
+import { Bookmark } from "../../common/internal";
 
 interface BookmarkListItemProps {
-  bookmark: RecipeType;
+  bookmark: Bookmark;
   closeBookmarks: () => void;
 }
 

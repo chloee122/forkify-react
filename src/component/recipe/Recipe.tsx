@@ -2,15 +2,16 @@ import { useState, useEffect } from "react";
 import RecipeDetails from "./RecipeDetails";
 import RecipeIngredients from "./RecipeIngredients";
 import RecipeDirection from "./RecipeDirection";
-import * as api from "../../api/queries/api";
+import * as api from "../../api/api";
 import useNavigationContext from "../../hooks/useNavigationContext";
-import { RecipeDetailsType } from "../../api/types/RecipeDetailsType";
+import { ExtendedRecipe } from "../../common/internal";
 
 const STARTING_INDEX_OF_RECIPE_ID = 9;
 
 function Recipe() {
-  const [selectedRecipe, setSelectedRecipe] =
-    useState<RecipeDetailsType | null>(null);
+  const [selectedRecipe, setSelectedRecipe] = useState<ExtendedRecipe | null>(
+    null
+  );
 
   const [selectedServings, setSelectedServings] = useState<number>(0);
   const { currentPath } = useNavigationContext();

@@ -1,9 +1,9 @@
 // @ts-ignore
 import { Fraction } from "fractional";
-import { RecipeDetailsType } from "../../api/types/RecipeDetailsType";
+import { ExtendedRecipe } from "../../common/internal";
 
 interface RecipeIngredientsProps {
-  selectedRecipe: RecipeDetailsType;
+  selectedRecipe: ExtendedRecipe;
   selectedServings: number;
 }
 
