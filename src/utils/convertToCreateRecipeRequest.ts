@@ -1,4 +1,4 @@
-import { CreateRecipeRequest } from "../common/api.type";
+import { CreateRecipeRequest } from "../common/api.types";
 import { ExtendedRecipeWithoutId } from "../common/internal";
 
 const convertToCreateRecipeRequest = (

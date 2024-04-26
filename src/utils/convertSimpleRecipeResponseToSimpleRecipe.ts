@@ -1,4 +1,4 @@
-import { SimpleRecipeResponse } from "../common/api.type";
+import { SimpleRecipeResponse } from "../common/api.types";
 import { SimpleRecipe } from "../common/internal";
 
 const convertSimpleRecipeResponseToSimpleRecipe = (

@@ -1,6 +1,6 @@
 import useBookmarksContext from "../../hooks/useBookmarksContext";
-import BookmarkListItem from "./BookmarkListItem";
 import Link from "../navigation/Link";
+import ListItem from "../shared/ListItem";
 
 interface BookmarkListProps {
   closeBookmarks: () => void;
@@ -12,7 +12,7 @@ function BookmarkList({ closeBookmarks }: BookmarkListProps) {
   const renderedBookmarks = bookmarks.map((bookmark) => {
     return (
       <Link key={bookmark.id} to={`/recipes/${bookmark.id}`}>
-        <BookmarkListItem bookmark={bookmark} closeBookmarks={closeBookmarks} />
+        <ListItem item={bookmark} onClick={closeBookmarks} />
       </Link>
     );
   });

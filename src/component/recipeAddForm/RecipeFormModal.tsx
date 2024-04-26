@@ -11,7 +11,7 @@ import {
 } from "./recipeFormModal.types";
 import useBookmarksContext from "../../hooks/useBookmarksContext";
 import useNavigationContext from "../../hooks/useNavigationContext";
-import convertToCreateRecipeRequest from "../../utils/convertToCreateRecipeRequest.ts";
+import convertToCreateRecipeRequest from "../../utils/convertToCreateRecipeRequest";
 
 const initialFormValue: RecipeFormState = {
   title: "",

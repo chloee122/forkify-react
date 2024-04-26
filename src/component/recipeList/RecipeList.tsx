@@ -1,10 +1,10 @@
 import { useState, useEffect, useCallback } from "react";
-import RecipeListItem from "./RecipeListItem";
 import Pagination from "./pagination/Pagination";
 import Link from "../navigation/Link";
 import { GoSync } from "react-icons/go";
 import ErrorMessage from "../shared/ErrorMessage";
 import { SimpleRecipe } from "../../common/internal";
+import ListItem from "../shared/ListItem";
 
 interface RecipeListProps {
   recipes: SimpleRecipe[];
@@ -31,7 +31,7 @@ function RecipeList({ recipes, isLoading, errorMessage }: RecipeListProps) {
   const renderedRecipes = getRecipeListByCurrentPageNumber().map((recipe) => {
     return (
       <Link key={recipe.id} to={`/recipes/${recipe.id}`}>
-        <RecipeListItem recipe={recipe} />
+        <ListItem item={recipe} />
       </Link>
     );
   });

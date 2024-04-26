@@ -1,4 +1,4 @@
-import { ExtendedRecipeResponse } from "../common/api.type";
+import { ExtendedRecipeResponse } from "../common/api.types";
 import { ExtendedRecipe } from "../common/internal";
 
 export const convertExtendedRecipeResponseToExtendedRecipe = (

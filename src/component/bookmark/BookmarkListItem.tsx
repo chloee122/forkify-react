@@ -8,7 +8,6 @@ interface BookmarkListItemProps {
 function BookmarkListItem({ bookmark, closeBookmarks }: BookmarkListItemProps) {
   return (
     <div
-      key={bookmark.id}
       className="group/item hover:bg-slate-100 flex"
       onClick={closeBookmarks}
     >
