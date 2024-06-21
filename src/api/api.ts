@@ -16,12 +16,12 @@ const searchRecipes = async (term: string): Promise<SimpleRecipe[]> => {
   return recipes;
 };
 
-const getRecipe = async (id: string): Promise<ExtendedRecipe>=> {
-    const response = await axios.get(`${ROOT_URL}/${id}`);
-    const recipe = convertExtendedRecipeResponseToExtendedRecipe(
-      response.data.data.recipe
-    )
-    return recipe
+const getRecipe = async (id: string): Promise<ExtendedRecipe> => {
+  const response = await axios.get(`${ROOT_URL}/${id}`);
+  const recipe = convertExtendedRecipeResponseToExtendedRecipe(
+    response.data.data.recipe
+  )
+  return recipe
 
 };
 
@@ -41,12 +41,12 @@ const createRecipe = async (
 };
 
 const getBookmarks = async (): Promise<Bookmark[]> => {
-    const response = await axios.get(BOOKMARK_DB_URL);
-    const bookmarks = response.data.map(
-      convertSimpleRecipeResponseToSimpleRecipe
-    );
-    return bookmarks;
-  
+  const response = await axios.get(BOOKMARK_DB_URL);
+  const bookmarks = response.data.map(
+    convertSimpleRecipeResponseToSimpleRecipe
+  );
+  return bookmarks;
+
 };
 
 const createBookmark = async (recipe: Bookmark): Promise<Bookmark> => {
