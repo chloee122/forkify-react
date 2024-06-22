@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { ImSpoonKnife } from "react-icons/im";
 import { searchRecipes } from "./api/api";
 import RecipeSearchForm from "./component/header/recipeSearchForm/RecipeSearchForm";
 import RecipeList from "./component/recipeList/RecipeList";
@@ -38,14 +39,20 @@ function App() {
   };
 
   return (
-    <div className="w-screen h-lvh h-max bg-gradient-to-br from-primary via-gradient1 to-gradient2">
-      <div className="max-w-7xl min-h-6xl bg-slate-100 m-auto rounded-lg">
-        <div className="flex">
+    <div className="bg-background1 bg-gradient-to-br from-background1 to-background2 border-solid border-4 border-green-700 text-stone-700">
+      <div className="w-10/12 m-auto min-h-[70rem] h-[70rem] my-14 rounded-xl bg-secondary">
+        <div className="grid grid-cols-header items-center justify-items-center rounded-t-lg h-[9%]">
+          <div className="flex flex-cols gap-3 ml-10">
+            <div className="flex items-center rounded-full min-w-12 min-h-12 bg-background1 bg-gradient-to-br from-background1 to-background2">
+              <ImSpoonKnife className="text-2xl text-white m-auto" />
+            </div>
+            <p className="text-4xl font-logo font-semibold">forkify</p>
+          </div>
           <RecipeSearchForm handleSearch={handleSearch} />
           <RecipeAddButton />
           <Bookmark />
         </div>
-        <div className="flex">
+        <div className="">
           <RecipeList
             recipes={recipes}
             isLoading={isLoading}
