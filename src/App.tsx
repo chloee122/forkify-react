@@ -39,7 +39,7 @@ function App() {
   };
 
   return (
-    <div className="bg-background1 bg-gradient-to-br from-background1 to-background2 border-solid border-4 border-green-700 text-greydark1 font-nunito">
+    <div className="text-greydark1 font-nunito">
       <div className="w-10/12 m-auto min-h-[75rem] h-[75rem] my-14 rounded-xl bg-secondary">
         <div className="grid grid-cols-header items-center justify-items-center rounded-t-lg h-[9%]">
           <div className="flex flex-cols gap-3 ml-10">
@@ -54,7 +54,7 @@ function App() {
           <RecipeAddButton />
           <Bookmark />
         </div>
-        <div className="h-[91%] border-solid border-2 border-black">
+        <div className="h-[91%] rounded-b-xl">
           <RecipeList
             recipes={recipes}
             isLoading={isLoading}
