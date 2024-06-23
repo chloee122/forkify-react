@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
+import { PiSpinner } from "react-icons/pi";
 import Pagination from "./pagination/Pagination";
 import Link from "../navigation/Link";
-import { GoSync } from "react-icons/go";
 import ErrorMessage from "../shared/ErrorMessage";
 import { SimpleRecipe } from "../../common/internal";
 import ListItem from "../shared/ListItem";
@@ -37,9 +37,17 @@ function RecipeList({ recipes, isLoading, errorMessage }: RecipeListProps) {
   });
 
   return (
-    <div>
-      {isLoading ? <GoSync className="animate-spin" /> : renderedRecipes}
-      {errorMessage && <ErrorMessage message={errorMessage} />}
+    <div className="w-1/3 h-full flex flex-col justify-between bg-white">
+      <div className="pt-7">
+        {isLoading ? (
+          <div className="py-12 px-11">
+            <PiSpinner className="animate-spin text-primary text-6xl m-auto" />
+          </div>
+        ) : (
+          renderedRecipes
+        )}
+        {errorMessage && <ErrorMessage message={errorMessage} />}
+      </div>
       {getRecipeListByCurrentPageNumber().length !== 0 && (
         <Pagination
           currentPage={currentPage}

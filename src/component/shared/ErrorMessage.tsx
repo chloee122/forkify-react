@@ -1,4 +1,4 @@
-import { GoAlert } from "react-icons/go";
+import { FiAlertTriangle } from "react-icons/fi";
 
 interface ErrorMessageProps {
   message: string;
@@ -6,9 +6,9 @@ interface ErrorMessageProps {
 
 function ErrorMessage({ message }: ErrorMessageProps) {
   return (
-    <div>
-      <GoAlert />
-      <p>{message}</p>
+    <div className="flex max-w-xl py-12 px-11">
+      <FiAlertTriangle className="text-primary text-4xl" />
+      <p className="text-lg font-semibold ml-4">{message}</p>
     </div>
   );
 }

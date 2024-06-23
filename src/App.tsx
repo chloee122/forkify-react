@@ -39,20 +39,22 @@ function App() {
   };
 
   return (
-    <div className="bg-background1 bg-gradient-to-br from-background1 to-background2 border-solid border-4 border-green-700 text-stone-700">
-      <div className="w-10/12 m-auto min-h-[70rem] h-[70rem] my-14 rounded-xl bg-secondary">
+    <div className="bg-background1 bg-gradient-to-br from-background1 to-background2 border-solid border-4 border-green-700 text-greydark1 font-nunito">
+      <div className="w-10/12 m-auto min-h-[75rem] h-[75rem] my-14 rounded-xl bg-secondary">
         <div className="grid grid-cols-header items-center justify-items-center rounded-t-lg h-[9%]">
           <div className="flex flex-cols gap-3 ml-10">
-            <div className="flex items-center rounded-full min-w-12 min-h-12 bg-background1 bg-gradient-to-br from-background1 to-background2">
+            <div className="bg-background1 bg-gradient-to-br from-background1 to-background2 flex items-center rounded-full min-w-12 min-h-12 ">
               <ImSpoonKnife className="text-2xl text-white m-auto" />
             </div>
-            <p className="text-4xl font-logo font-semibold">forkify</p>
+            <p className="text-4xl font-logo font-semibold text-slate-700 ">
+              forkify
+            </p>
           </div>
           <RecipeSearchForm handleSearch={handleSearch} />
           <RecipeAddButton />
           <Bookmark />
         </div>
-        <div className="">
+        <div className="h-[91%] border-solid border-2 border-black">
           <RecipeList
             recipes={recipes}
             isLoading={isLoading}
