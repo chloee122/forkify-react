@@ -51,11 +51,9 @@ function Pagination({
           onClick={goToPreviousPage}
           className="bg-secondary rounded-full w-[25%] p-1 float-left ml-5 hover:bg-greylight2"
         >
-          {previousPage && (
-            <div className="flex items-center justify-center gap-1 text-primary">
-              <IoArrowBackSharp /> Page {previousPage}
-            </div>
-          )}
+          <div className="flex items-center justify-center gap-1 text-primary">
+            <IoArrowBackSharp /> Page {previousPage}
+          </div>
         </button>
       )}
 
@@ -64,11 +62,9 @@ function Pagination({
           onClick={goToNextPage}
           className="bg-secondary rounded-full w-[25%] p-1 float-right mr-5 hover:bg-greylight2"
         >
-          {nextPage && (
-            <div className="flex items-center justify-center gap-1 text-primary">
-              Page {nextPage} <IoArrowForwardSharp />
-            </div>
-          )}
+          <div className="flex items-center justify-center gap-1 text-primary">
+            Page {nextPage} <IoArrowForwardSharp />
+          </div>
         </button>
       )}
     </div>
