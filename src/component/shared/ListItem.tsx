@@ -12,7 +12,7 @@ export default function ListItem({
   return (
     <div
       onClick={onClick}
-      className="hover:-translate-y-0.5 hover:bg-secondary flex justify-start gap-3 items-center px-8 py-4"
+      className="hover:-translate-y-0.5 hover:bg-secondary flex justify-start gap-3 items-center px-8 py-4 bg-white"
     >
       <img
         src={imageUrl}
