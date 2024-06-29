@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { GoArrowRight, GoArrowLeft } from "react-icons/go";
+import { IoArrowBackSharp, IoArrowForwardSharp } from "react-icons/io5";
 
 interface PaginationProps {
   totalPages: number;
@@ -45,21 +45,28 @@ function Pagination({
   };
 
   return (
-    <div>
-      <button onClick={goToPreviousPage}>
-        {previousPage && (
-          <div className="flex">
-            <GoArrowLeft /> Page {previousPage}
+    <div className="mb-8">
+      {previousPage && (
+        <button
+          onClick={goToPreviousPage}
+          className="bg-secondary rounded-full w-[25%] p-1 float-left ml-5 hover:bg-greylight2"
+        >
+          <div className="flex items-center justify-center gap-1 text-primary">
+            <IoArrowBackSharp /> Page {previousPage}
           </div>
-        )}
-      </button>
-      <button onClick={goToNextPage}>
-        {nextPage && (
-          <div className="flex">
-            Page {nextPage} <GoArrowRight />
+        </button>
+      )}
+
+      {nextPage && (
+        <button
+          onClick={goToNextPage}
+          className="bg-secondary rounded-full w-[25%] p-1 float-right mr-5 hover:bg-greylight2"
+        >
+          <div className="flex items-center justify-center gap-1 text-primary">
+            Page {nextPage} <IoArrowForwardSharp />
           </div>
-        )}
-      </button>
+        </button>
+      )}
     </div>
   );
 }
