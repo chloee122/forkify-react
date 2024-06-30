@@ -16,7 +16,7 @@ function Bookmark() {
 
   return (
     <div
-      className="flex justify-center text-sm w-full h-full hover:bg-stone-300 relative"
+      className="flex justify-center text-sm w-full h-full hover:bg-greylight2"
       onMouseEnter={() => setShowBookmarks(true)}
       onMouseLeave={() => setShowBookmarks(false)}
     >

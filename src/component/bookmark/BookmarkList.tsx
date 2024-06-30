@@ -18,7 +18,7 @@ function BookmarkList({ closeBookmarks }: BookmarkListProps) {
     );
   });
   return (
-    <div className="absolute top-[6.7rem] -right-[35px] py-3 bg-white w-[400px] z-10">
+    <div className="absolute top-[100px] right-0 py-3 bg-white w-[400px] z-10">
       {renderedBookmarks.length === 0 ? (
         <ErrorMessage
           message={"No bookmarks yet. Find a nice recipe and bookmark it"}

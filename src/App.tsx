@@ -40,7 +40,7 @@ function App() {
 
   return (
     <div className="max-w-[1200px] min-h-[1170px] mx-auto my-[4vw] grid grid-rows-container rounded-xl bg-secondary">
-      <div className="grid grid-cols-header items-center justify-items-center rounded-t-lg">
+      <div className="grid grid-cols-header items-center justify-items-center rounded-t-lg relative">
         <div className="flex flex-cols gap-3 ml-10">
           <div className="bg-background1 bg-gradient-to-br from-background1 to-background2 flex items-center rounded-full min-w-12 min-h-12 ">
             <ImSpoonKnife className="text-2xl text-white m-auto" />
