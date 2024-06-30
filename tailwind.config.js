@@ -15,6 +15,10 @@ module.exports = {
       },
       gridTemplateColumns: {
         header: "0.4fr 2fr 0.4fr 0.4fr 0.1fr",
+        main: "1fr 2fr",
+      },
+      gridTemplateRows: {
+        container: "100px minmax(500px, auto)",
       },
       fontFamily: {
         logo: ["Dancing Script", "ui-sans-serif"],

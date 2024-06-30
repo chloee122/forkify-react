@@ -39,32 +39,30 @@ function App() {
   };
 
   return (
-    <div className="text-greydark1 font-nunito">
-      <div className="w-10/12 m-auto min-h-[75rem] h-[75rem] my-14 rounded-xl bg-secondary">
-        <div className="grid grid-cols-header items-center justify-items-center rounded-t-lg h-[9%]">
-          <div className="flex flex-cols gap-3 ml-10">
-            <div className="bg-background1 bg-gradient-to-br from-background1 to-background2 flex items-center rounded-full min-w-12 min-h-12 ">
-              <ImSpoonKnife className="text-2xl text-white m-auto" />
-            </div>
-            <p className="text-4xl font-logo font-semibold text-slate-700 ">
-              forkify
-            </p>
+    <div className="max-w-[1200px] min-h-[1170px] mx-auto my-[4vw] grid grid-rows-container rounded-xl bg-secondary">
+      <div className="grid grid-cols-header items-center justify-items-center rounded-t-lg">
+        <div className="flex flex-cols gap-3 ml-10">
+          <div className="bg-background1 bg-gradient-to-br from-background1 to-background2 flex items-center rounded-full min-w-12 min-h-12 ">
+            <ImSpoonKnife className="text-2xl text-white m-auto" />
           </div>
-          <RecipeSearchForm handleSearch={handleSearch} />
-          <RecipeAddButton />
-          <Bookmark />
+          <p className="text-4xl font-logo font-semibold text-slate-700 ">
+            forkify
+          </p>
         </div>
-        <div className="h-[91%] rounded-b-xl">
-          <RecipeList
-            recipes={recipes}
-            isLoading={isLoading}
-            errorMessage={errorMessage}
-          />
+        <RecipeSearchForm handleSearch={handleSearch} />
+        <RecipeAddButton />
+        <Bookmark />
+      </div>
+      <div className="grid grid-cols-main rounded-b-xl">
+        <RecipeList
+          recipes={recipes}
+          isLoading={isLoading}
+          errorMessage={errorMessage}
+        />
 
-          <Route path="/recipes/">
-            <Recipe />
-          </Route>
-        </div>
+        <Route path="/recipes/">
+          <Recipe />
+        </Route>
       </div>
     </div>
   );

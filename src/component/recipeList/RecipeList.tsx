@@ -37,7 +37,7 @@ function RecipeList({ recipes, isLoading, errorMessage }: RecipeListProps) {
   });
 
   return (
-    <div className="w-1/3 h-full flex flex-col justify-between bg-white rounded-bl-xl">
+    <div className="h-full flex flex-col justify-between bg-white rounded-bl-xl">
       <div className="pt-7">
         {isLoading ? (
           <div className="py-12 px-11">
