@@ -6,6 +6,7 @@ import RecipeList from "./component/recipeList/RecipeList";
 import Recipe from "./component/recipe/Recipe";
 import Bookmark from "./component/bookmark/Bookmark";
 import RecipeAddButton from "./component/header/recipeAddButton/RecipeAddButton";
+import Message from "./component/shared/Message";
 import Route from "./component/navigation/Route";
 import { SimpleRecipe } from "./common/internal";
 
@@ -59,7 +60,15 @@ function App() {
           isLoading={isLoading}
           errorMessage={errorMessage}
         />
-
+        <Route path="/" exact={true}>
+          <div>
+            <Message
+              message={
+                "Start by searching for a recipe or an ingredient. Have fun!"
+              }
+            />
+          </div>
+        </Route>
         <Route path="/recipes/">
           <Recipe />
         </Route>

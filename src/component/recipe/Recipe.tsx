@@ -6,7 +6,7 @@ import RecipeDirection from "./RecipeDirection";
 import * as api from "../../api/api";
 import useNavigationContext from "../../hooks/useNavigationContext";
 import { ExtendedRecipe } from "../../common/internal";
-import ErrorMessage from "../shared/ErrorMessage";
+import Message from "../shared/Message";
 
 const STARTING_INDEX_OF_RECIPE_ID = 9;
 
@@ -49,7 +49,7 @@ function Recipe() {
     if (selectedRecipe) setSelectedServings(selectedRecipe.servings);
   }, [selectedRecipe]);
 
-  if (error) return <ErrorMessage message={error} />;
+  if (error) return <Message message={error} error={true} />;
   if (!selectedRecipe) return null;
 
   return (
