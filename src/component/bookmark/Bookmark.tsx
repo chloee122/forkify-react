@@ -15,19 +15,17 @@ function Bookmark() {
   };
 
   return (
-    <>
-      <div
-        className="flex justify-center text-sm w-full h-full hover:bg-stone-300"
-        onMouseEnter={() => setShowBookmarks(true)}
-        onMouseLeave={() => setShowBookmarks(false)}
-      >
-        <button className="flex items-center justify-center gap-2 font-semibold">
-          <FaRegBookmark className="text-2xl text-background2" />
-          BOOKMARKS
-        </button>
-      </div>
+    <div
+      className="flex justify-center text-sm w-full h-full hover:bg-greylight2"
+      onMouseEnter={() => setShowBookmarks(true)}
+      onMouseLeave={() => setShowBookmarks(false)}
+    >
+      <button className="flex items-center justify-center gap-2 font-semibold">
+        <FaRegBookmark className="text-2xl text-background2" />
+        BOOKMARKS
+      </button>
       {showBookmarks && <BookmarkList closeBookmarks={closeBookmarks} />}
-    </>
+    </div>
   );
 }
 
