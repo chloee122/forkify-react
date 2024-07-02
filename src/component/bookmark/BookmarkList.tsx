@@ -1,6 +1,6 @@
 import useBookmarksContext from "../../hooks/useBookmarksContext";
 import Link from "../navigation/Link";
-import ErrorMessage from "../shared/ErrorMessage";
+import Message from "../shared/Message";
 import ListItem from "../shared/ListItem";
 
 interface BookmarkListProps {
@@ -20,7 +20,7 @@ function BookmarkList({ closeBookmarks }: BookmarkListProps) {
   return (
     <div className="absolute top-[100px] right-0 py-3 bg-white w-[400px] z-10">
       {renderedBookmarks.length === 0 ? (
-        <ErrorMessage
+        <Message
           message={"No bookmarks yet. Find a nice recipe and bookmark it"}
         />
       ) : (

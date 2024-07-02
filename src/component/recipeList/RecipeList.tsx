@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { PiSpinner } from "react-icons/pi";
 import Pagination from "./pagination/Pagination";
 import Link from "../navigation/Link";
-import ErrorMessage from "../shared/ErrorMessage";
+import Message from "../shared/Message";
 import { SimpleRecipe } from "../../common/internal";
 import ListItem from "../shared/ListItem";
 
@@ -46,7 +46,7 @@ function RecipeList({ recipes, isLoading, errorMessage }: RecipeListProps) {
         ) : (
           renderedRecipes
         )}
-        {errorMessage && <ErrorMessage message={errorMessage} />}
+        {errorMessage && <Message message={errorMessage} error={true} />}
       </div>
       {getRecipeListByCurrentPageNumber().length !== 0 && (
         <Pagination
