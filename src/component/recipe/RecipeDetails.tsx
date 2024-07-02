@@ -1,4 +1,4 @@
-import { GoBookmark, GoBookmarkFill } from "react-icons/go";
+import { FaRegBookmark, FaBookmark } from "react-icons/fa";
 import { FiMinusCircle, FiPlusCircle, FiUsers, FiClock } from "react-icons/fi";
 import { useMemo } from "react";
 import useBookmarksContext from "../../hooks/useBookmarksContext";
@@ -69,13 +69,13 @@ function RecipeDetails({
         </div>
       </div>
       <button
-        className="rounded-full bg-gradient-to-br from-background1 to-background2 h-11 w-11 flex items-center justify-center hover:scale-y-105 hover:scale-x-105 ml-auto"
+        className="rounded-full bg-gradient-to-br from-background1 to-background2 h-11 w-11 flex items-center justify-center hover:scale-105 ml-auto"
         onClick={() => handleBookmark()}
       >
         {isRecipeBookmarked ? (
-          <GoBookmarkFill className="text-white h-6 w-6" />
+          <FaBookmark className="text-white h-6 w-6" />
         ) : (
-          <GoBookmark className="text-white h-6 w-6" />
+          <FaRegBookmark className="text-white h-6 w-6" />
         )}
       </button>
     </div>

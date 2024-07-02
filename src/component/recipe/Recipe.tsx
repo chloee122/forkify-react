@@ -49,7 +49,12 @@ function Recipe() {
     if (selectedRecipe) setSelectedServings(selectedRecipe.servings);
   }, [selectedRecipe]);
 
-  if (error) return <Message message={error} error={true} />;
+  if (error)
+    return (
+      <div>
+        <Message message={error} error={true} />
+      </div>
+    );
   if (!selectedRecipe) return null;
 
   return (

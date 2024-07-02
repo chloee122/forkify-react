@@ -12,7 +12,7 @@ function RecipeHeader({ selectedRecipe }: RecipeHeaderProps) {
         src={selectedRecipe.imageUrl}
         alt={selectedRecipe.title}
       />
-      <h1 className="absolute bottom-0 left-1/2 -translate-x-2/4 translate-y-1/4 -skew-y-6 text-white text-4xl font-bold uppercase text-center leading-loose">
+      <h1 className="absolute bottom-0 left-1/2 -translate-x-2/4 translate-y-[20%] -skew-y-6 text-white text-3xl font-bold uppercase text-center leading-loose">
         <span className="py-3.5 px-5 bg-gradient-to-br from-background1 to-background2 box-decoration-clone">
           {selectedRecipe.title}
         </span>
