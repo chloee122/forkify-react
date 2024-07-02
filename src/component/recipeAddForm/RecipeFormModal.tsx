@@ -3,7 +3,7 @@ import { GoX, GoSync } from "react-icons/go";
 import * as api from "../../api/api";
 import Modal from "./Modal";
 import { convertIngredients } from "../../utils/convertIngredients";
-import ErrorMessage from "../shared/ErrorMessage";
+import Message from "../shared/Message";
 import {
   RecipeFormState,
   RecipeFormAction,
@@ -189,7 +189,7 @@ function RecipeFormModal({ onClose }: RecipeFormModalProps) {
   return (
     <Modal onClose={onClose}>
       {successMessage ? <p>{successMessage}</p> : form}
-      {errorMessage && <ErrorMessage message={errorMessage} />}
+      {errorMessage && <Message message={errorMessage} error={true} />}
     </Modal>
   );
 }

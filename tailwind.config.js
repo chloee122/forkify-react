@@ -24,6 +24,9 @@ module.exports = {
         logo: ["Dancing Script", "ui-sans-serif"],
         nunito: ["Nunito Sans", "sans-serif"],
       },
+      flex: {
+        ingredient: "0 0 auto",
+      },
     },
   },
   plugins: [],
