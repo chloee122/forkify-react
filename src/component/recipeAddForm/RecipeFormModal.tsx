@@ -178,14 +178,14 @@ function RecipeFormModal({ onClose }: RecipeFormModalProps) {
         </button>
       </div>
       <div className="grid grid-cols-2 gap-16">
-        <div className="flex flex-col">
+        <div>
           <h3 className="font-bold text-xl uppercase mb-5">RECIPE DATA</h3>
           <div>{recipeData}</div>
         </div>
 
         <div>
           <h3 className="font-bold text-xl uppercase mb-5">INGREDIENTS</h3>
-          <div className="flex flex-col">{recipeIngredients}</div>
+          <div>{recipeIngredients}</div>
         </div>
       </div>
 
@@ -207,13 +207,13 @@ function RecipeFormModal({ onClose }: RecipeFormModalProps) {
     <Modal onClose={onClose}>
       {successMessage ? (
         <div className="flex items-center py-12 px-11 gap-3.5 m-auto">
-          <FiSmile className="h-6 w-6 text-primary" />
-          <p className="font-semibold text-lg">{successMessage}</p>
+          <FiSmile className="h-10 w-10 text-primary" />
+          <p className="font-semibold text-xl">{successMessage}</p>
         </div>
       ) : (
         form
       )}
-      {errorMessage && <Message message={errorMessage} />}
+      {errorMessage && <Message message={errorMessage} error={true} />}
     </Modal>
   );
 }
