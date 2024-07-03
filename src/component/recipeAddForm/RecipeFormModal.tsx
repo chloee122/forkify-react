@@ -1,4 +1,5 @@
 import { useReducer, useState, useEffect } from "react";
+import { AxiosError } from "axios";
 import { GoX, GoSync } from "react-icons/go";
 import { FiUploadCloud, FiSmile } from "react-icons/fi";
 import * as api from "../../api/api";
@@ -87,9 +88,9 @@ function RecipeFormModal({ onClose }: RecipeFormModalProps) {
     setSuccessMessage("Recipe was successfully uploaded!");
   };
 
-  const handleError = (err: Error) => {
+  const handleError = (errorMessage: string) => {
     setIsLoading(false);
-    setErrorMessage(err.message);
+    setErrorMessage(errorMessage);
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -108,7 +109,9 @@ function RecipeFormModal({ onClose }: RecipeFormModalProps) {
       createBookmark(createdRecipe);
       handleSuccess();
     } catch (err) {
-      if (err instanceof Error) handleError(err);
+      if (err instanceof AxiosError) {
+        handleError(err.response?.data.message || err.message);
+      }
     }
   };
 
