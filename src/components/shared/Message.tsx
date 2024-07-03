@@ -11,9 +11,11 @@ function Message({ message, error }: MessageProps) {
       {error ? (
         <FiAlertTriangle className="text-primary h-10 w-10" />
       ) : (
-        <FiSmile className="text-primary h-14 w-14" />
+        <FiSmile className="text-primary h-10 w-10" />
       )}
-      <p className="text-lg font-semibold ml-4">{message}</p>
+      <p className="text-lg font-semibold ml-4 max-w-60 text-center">
+        {message}
+      </p>
     </div>
   );
 }

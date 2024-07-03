@@ -25,8 +25,8 @@ function RecipeSearchForm({ handleSearch }: RecipeSearchFormProps) {
         placeholder="Search over 1,000,000 recipes..."
         className="w-3/5 outline-none"
       />
-      <button className="flex items-center justify-center gap-3 rounded-full bg-gradient-to-br from-background1 to-background2 text-white px-7 py-1 w-2/6">
-        <FiSearch className="text-xl" /> SEARCH
+      <button className="flex items-center justify-center gap-3 rounded-full bg-gradient-to-br from-background1 to-background2 text-white px-9 py-1 hover:scale-105">
+        <FiSearch className="h-6 w-6" /> SEARCH
       </button>
     </form>
   );

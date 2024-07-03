@@ -20,7 +20,7 @@ export default function ListItem({
         className="h-16 w-16 rounded-full object-cover"
       ></img>
       <div>
-        <p className="text-sm font-semibold text-primary uppercase font-semibold text-ellipsis max-w-[15rem] overflow-hidden whitespace-nowrap">
+        <p className="text-sm font-semibold text-primary uppercase font-semibold text-ellipsis max-w-60 overflow-hidden whitespace-nowrap">
           {title}
         </p>
         <p className="text-xs text-greydark2 uppercase font-semibold">

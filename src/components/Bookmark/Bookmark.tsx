@@ -21,7 +21,7 @@ function Bookmark() {
       onMouseLeave={() => setShowBookmarks(false)}
     >
       <button className="flex items-center justify-center gap-2 font-semibold">
-        <FaRegBookmark className="text-2xl text-background2" />
+        <FaRegBookmark className="h-6 w-6 text-primary" />
         BOOKMARKS
       </button>
       {showBookmarks && <BookmarkList closeBookmarks={closeBookmarks} />}

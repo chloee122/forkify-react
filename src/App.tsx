@@ -32,7 +32,7 @@ function App() {
       setIsLoading(true);
       const recipes = await searchRecipes(term);
       if (recipes.length === 0)
-        throw Error("No recipe was found! Try other recipes");
+        throw Error("No recipes found for your query! Please try again ;)");
       handleSuccess(recipes);
     } catch (err) {
       if (err instanceof Error) handleError(err);

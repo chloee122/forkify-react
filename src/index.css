@@ -4,7 +4,7 @@
 
 @layer base {
   body {
-    @apply bg-background1 bg-gradient-to-br from-background1 to-background2 text-greydark1 font-nunito;
+    @apply bg-gradient-to-br from-background1 to-background2 text-greydark1 font-nunito;
   }
 }
 
