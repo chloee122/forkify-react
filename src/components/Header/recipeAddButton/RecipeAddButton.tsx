@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { FaRegPenToSquare } from "react-icons/fa6";
-import RecipeFormModal from "../../recipeAddForm/RecipeFormModal";
+import RecipeFormModal from "../../RecipeAddForm/RecipeFormModal";
 
 function RecipeAddButton() {
   const [showRecipeModal, setShowRecipeModal] = useState(false);

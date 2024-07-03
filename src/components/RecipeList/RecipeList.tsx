@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { PiSpinner } from "react-icons/pi";
 import Pagination from "./pagination/Pagination";
-import Link from "../navigation/Link";
+import Link from "../Navigation/Link";
 import Message from "../shared/Message";
 import { SimpleRecipe } from "../../common/internal";
 import ListItem from "../shared/ListItem";

@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { ImSpoonKnife } from "react-icons/im";
 import { searchRecipes } from "./api/api";
-import RecipeSearchForm from "./component/header/recipeSearchForm/RecipeSearchForm";
-import RecipeList from "./component/recipeList/RecipeList";
-import Recipe from "./component/recipe/Recipe";
-import Bookmark from "./component/bookmark/Bookmark";
-import RecipeAddButton from "./component/header/recipeAddButton/RecipeAddButton";
-import Message from "./component/shared/Message";
-import Route from "./component/navigation/Route";
+import RecipeSearchForm from "./components/Header/recipeSearchForm/RecipeSearchForm";
+import RecipeList from "./components/RecipeList/RecipeList";
+import Recipe from "./components/Recipe/Recipe";
+import Bookmark from "./components/Bookmark/Bookmark";
+import RecipeAddButton from "./components/Header/recipeAddButton/RecipeAddButton";
+import Message from "./components/shared/Message";
+import Route from "./components/Navigation/Route";
 import { SimpleRecipe } from "./common/internal";
 
 function App() {

@@ -1,5 +1,5 @@
 import useBookmarksContext from "../../hooks/useBookmarksContext";
-import Link from "../navigation/Link";
+import Link from "../Navigation/Link";
 import Message from "../shared/Message";
 import ListItem from "../shared/ListItem";
 
