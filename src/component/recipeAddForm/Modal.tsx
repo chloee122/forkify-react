@@ -10,9 +10,11 @@ function Modal({ children, onClose }: ModalProps) {
     <div>
       <div
         onClick={onClose}
-        className="fixed inset-0 bg-gray-300 opacity-90"
+        className="fixed inset-0 bg-[#00000066] backdrop-blur-sm"
       ></div>
-      <div className="fixed inset-40 p-10 bg-white">{children}</div>
+      <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-xl w-[1000px] px-14 py-12 shadow-2xl shadow-neutral-500">
+        {children}
+      </div>
     </div>,
     document.querySelector(".modal-container") as Element
   );

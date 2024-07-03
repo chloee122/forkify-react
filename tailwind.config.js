@@ -10,6 +10,7 @@ module.exports = {
         secondary: "#f9f5f3",
         greylight1: "#d3c7c3",
         greylight2: "#f2efee",
+        greylight3: "#d3c7c3",
         greydark1: "#615551",
         greydark2: "#918581",
       },

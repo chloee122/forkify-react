@@ -1,5 +1,6 @@
 import { useReducer, useState, useEffect } from "react";
 import { GoX, GoSync } from "react-icons/go";
+import { FiUploadCloud, FiSmile } from "react-icons/fi";
 import * as api from "../../api/api";
 import Modal from "./Modal";
 import { convertIngredients } from "../../utils/convertIngredients";
@@ -45,7 +46,7 @@ const labelText: LabelText = {
   title: "Title",
   sourceUrl: "URL",
   imageUrl: "Image URL",
-  publisher: "publisher",
+  publisher: "Publisher",
   cookingTime: "Prep time",
   servings: "Servings",
 };
@@ -83,7 +84,7 @@ function RecipeFormModal({ onClose }: RecipeFormModalProps) {
 
   const handleSuccess = () => {
     setIsLoading(false);
-    setSuccessMessage("Recipe was successfully uploaded :)");
+    setSuccessMessage("Recipe was successfully uploaded!");
   };
 
   const handleError = (err: Error) => {
@@ -115,7 +116,7 @@ function RecipeFormModal({ onClose }: RecipeFormModalProps) {
     if (successMessage) {
       setTimeout(() => {
         onClose();
-      }, 2000);
+      }, 5000);
     }
   }, [successMessage, onClose]);
 
@@ -132,8 +133,11 @@ function RecipeFormModal({ onClose }: RecipeFormModalProps) {
     .map((key) => {
       const labelCheck = ["cooking_time", "servings"].includes(key);
       return (
-        <div key={key}>
-          <label>{labelText[key]}</label>
+        <div
+          key={key}
+          className="grid grid-cols-[1fr_2.8fr] items-center gap-3.5 mb-3.5 text-[15px]"
+        >
+          <label className="font-semibold">{labelText[key]}</label>
           <input
             name={key}
             type={labelCheck ? "number" : "text"}
@@ -141,6 +145,7 @@ function RecipeFormModal({ onClose }: RecipeFormModalProps) {
             onChange={handleChange}
             value={recipeFormState[key] || ""}
             min={labelCheck ? 1 : undefined}
+            className="py-1 px-2.5 border-[1px] border-[#ddd] rounded-md"
           />
         </div>
       );
@@ -148,14 +153,18 @@ function RecipeFormModal({ onClose }: RecipeFormModalProps) {
 
   const recipeIngredients = recipeFormState.ingredients.map(
     (_: string, index: number) => (
-      <div key={index}>
-        <label>Ingredient {index + 1}</label>
+      <div
+        key={index}
+        className="grid grid-cols-[1fr_2.8fr] items-center gap-3.5 mb-3.5 text-[15px]"
+      >
+        <label className="font-semibold">Ingredient {index + 1}</label>
         <input
           id={String(index)}
           type="text"
           placeholder="Format: 'Quantity, Unit, Description'"
           onChange={handleChange}
           value={recipeFormState.ingredients[index]}
+          className="py-1 px-2.5 border-[1px] border-[#ddd] rounded-md placeholder:text-greylight3"
         />
       </div>
     )
@@ -165,30 +174,45 @@ function RecipeFormModal({ onClose }: RecipeFormModalProps) {
     <form onSubmit={(e) => handleSubmit(e)}>
       <div className="flex justify-end">
         <button type="button" onClick={onClose}>
-          <GoX />
+          <GoX className="h-8 w-8" />
         </button>
       </div>
-      <div className="flex flex-row">
+      <div className="grid grid-cols-2 gap-16">
         <div>
-          <h3>RECIPE DATA</h3>
-          <div className="flex flex-col">{recipeData}</div>
+          <h3 className="font-bold text-xl uppercase mb-5">RECIPE DATA</h3>
+          <div>{recipeData}</div>
         </div>
 
         <div>
-          <h3>INGREDIENTS</h3>
-          <div className="flex flex-col">{recipeIngredients}</div>
+          <h3 className="font-bold text-xl uppercase mb-5">INGREDIENTS</h3>
+          <div>{recipeIngredients}</div>
         </div>
       </div>
 
-      <button disabled={isLoading}>
-        {isLoading ? <GoSync className="animate-spin" /> : "UPLOAD"}
+      <button
+        disabled={isLoading}
+        className="flex items-center justify-center gap-3 rounded-full bg-gradient-to-br from-background1 to-background2 text-white px-10 py-4 uppercase hover:scale-105 font-bold mx-auto mt-5"
+      >
+        {isLoading ? (
+          <GoSync className="animate-spin h-5 w-5" />
+        ) : (
+          <FiUploadCloud className="h-6 w-6" />
+        )}
+        UPLOAD
       </button>
     </form>
   );
 
   return (
     <Modal onClose={onClose}>
-      {successMessage ? <p>{successMessage}</p> : form}
+      {successMessage ? (
+        <div className="flex items-center py-12 px-11 gap-3.5 m-auto">
+          <FiSmile className="h-10 w-10 text-primary" />
+          <p className="font-semibold text-xl">{successMessage}</p>
+        </div>
+      ) : (
+        form
+      )}
       {errorMessage && <Message message={errorMessage} error={true} />}
     </Modal>
   );
