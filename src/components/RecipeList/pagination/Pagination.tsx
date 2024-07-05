@@ -45,7 +45,7 @@ function Pagination({
   };
 
   return (
-    <div className="mb-8">
+    <div>
       {previousPage && (
         <button
           onClick={goToPreviousPage}
