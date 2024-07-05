@@ -37,7 +37,7 @@ function RecipeList({ recipes, isLoading, errorMessage }: RecipeListProps) {
   });
 
   return (
-    <div className="h-full flex flex-col justify-between bg-white rounded-bl-xl">
+    <div className="h-full flex flex-col justify-between bg-white rounded-bl-xl gap-5">
       <div className="pt-7">
         {isLoading ? (
           <div className="py-12 px-11">
@@ -48,13 +48,20 @@ function RecipeList({ recipes, isLoading, errorMessage }: RecipeListProps) {
         )}
         {errorMessage && <Message message={errorMessage} error={true} />}
       </div>
-      {getRecipeListByCurrentPageNumber().length !== 0 && (
-        <Pagination
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-          totalPages={totalPages}
-        />
-      )}
+      <div className="flex flex-col gap-8">
+        {getRecipeListByCurrentPageNumber().length !== 0 && (
+          <Pagination
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            totalPages={totalPages}
+          />
+        )}
+        <p className="text-xs text-greydark2 px-9 mb-6 text-center">
+          Forkify API and app design by Jonas Schmedtmann.
+          <br />
+          App built with React by Chloe 🥯.
+        </p>
+      </div>
     </div>
   );
 }
