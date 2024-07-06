@@ -6,6 +6,8 @@ import { CreateRecipeRequest } from "../common/api.types";
 
 const apiKey = process.env.REACT_APP_API_KEY;
 const ROOT_URL = "https://forkify-api.herokuapp.com/api/v2/recipes";
+
+// For using JSON Server
 const BOOKMARK_DB_URL = "http://localhost:3001/bookmarks";
 
 const searchRecipes = async (term: string): Promise<SimpleRecipe[]> => {
@@ -40,6 +42,7 @@ const createRecipe = async (
   };
 };
 
+// For using JSON Server
 const getBookmarks = async (): Promise<Bookmark[]> => {
   const response = await axios.get(BOOKMARK_DB_URL);
   const bookmarks = response.data.map(
@@ -49,6 +52,7 @@ const getBookmarks = async (): Promise<Bookmark[]> => {
 
 };
 
+// For using JSON Server
 const createBookmark = async (recipe: Bookmark): Promise<Bookmark> => {
   const response = await axios.post(BOOKMARK_DB_URL, {
     id: recipe.id,
@@ -60,6 +64,7 @@ const createBookmark = async (recipe: Bookmark): Promise<Bookmark> => {
   return bookmark;
 };
 
+// For using JSON Server
 const deleteBookmark = async (id: string) => {
   await axios.delete(`${BOOKMARK_DB_URL}/${id}`);
 };
