@@ -1,5 +1,4 @@
 import { createContext, useState } from "react";
-import * as api from "../api/api";
 import { Bookmark } from "../common/internal";
 
 interface BookmarkProviderProps {
@@ -19,18 +18,30 @@ function BookmarksProvider({ children }: BookmarkProviderProps) {
   const [bookmarks, setBookmarks] = useState<ContextType["bookmarks"]>([]);
 
   const getBookmarks = async () => {
-    const data = await api.getBookmarks();
-    setBookmarks(data);
+    const data = window.localStorage.getItem("bookmarks");
+    if (data && data.length !== 0) {
+      const bookmarks = JSON.parse(data);
+      setBookmarks(bookmarks);
+    }
   };
 
   const createBookmark = async (recipe: Bookmark) => {
-    const data = await api.createBookmark(recipe);
-    setBookmarks([...bookmarks, data]);
+    setBookmarks([...bookmarks, recipe]);
+    window.localStorage.setItem(
+      "bookmarks",
+      JSON.stringify([...bookmarks, recipe])
+    );
   };
 
   const deleteBookmark = async (id: string) => {
-    await api.deleteBookmark(id);
-    setBookmarks(bookmarks.filter((bookmark) => bookmark.id !== id));
+    const filteredBookmarks = bookmarks.filter(
+      (bookmark) => bookmark.id !== id
+    );
+    setBookmarks(filteredBookmarks);
+    window.localStorage.setItem(
+      "bookmarks",
+      JSON.stringify([...filteredBookmarks])
+    );
   };
 
   return (
